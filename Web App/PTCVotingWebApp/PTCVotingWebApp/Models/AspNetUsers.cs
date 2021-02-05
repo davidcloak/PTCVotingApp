@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PTCVotingWebApp.Models
 {
@@ -13,6 +14,7 @@ namespace PTCVotingWebApp.Models
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
         }
 
+        [Key]
         public string Id { get; set; }
         public string UserName { get; set; }
         public string NormalizedUserName { get; set; }
