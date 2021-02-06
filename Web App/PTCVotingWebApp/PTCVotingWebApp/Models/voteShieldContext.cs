@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
+// If you have enabled NRTs for your project, then un-comment the following line:
+// #nullable disable
+
 namespace PTCVotingWebApp.Models
 {
     public partial class voteShieldContext : DbContext
@@ -22,6 +26,8 @@ namespace PTCVotingWebApp.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Politcal> Politcal { get; set; }
+        public virtual DbSet<Voting> Voting { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -130,6 +136,51 @@ namespace PTCVotingWebApp.Models
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<Politcal>(entity =>
+            {
+                entity.HasKey(e => e.Vote)
+                    .HasName("PK__Politcal__73E4AA2A8DE4EFCD");
+
+                entity.Property(e => e.Vote).HasColumnName("vote");
+
+                entity.Property(e => e.FkId)
+                    .HasColumnName("fk_Id")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PoliticalParty)
+                    .HasColumnName("politicalParty")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Fk)
+                    .WithMany(p => p.Politcal)
+                    .HasForeignKey(d => d.FkId)
+                    .HasConstraintName("FK__Politcal__fk_Id__08B54D69");
+            });
+
+            modelBuilder.Entity<Voting>(entity =>
+            {
+                entity.HasKey(e => e.Canidate)
+                    .HasName("PK__voting__55DAE775384E11A6");
+
+                entity.ToTable("voting");
+
+                entity.Property(e => e.Canidate)
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FkVote).HasColumnName("fk_vote");
+
+                entity.HasOne(d => d.FkVoteNavigation)
+                    .WithMany(p => p.Voting)
+                    .HasForeignKey(d => d.FkVote)
+                    .HasConstraintName("FK__voting__fk_vote__0D7A0286");
             });
 
             OnModelCreatingPartial(modelBuilder);
