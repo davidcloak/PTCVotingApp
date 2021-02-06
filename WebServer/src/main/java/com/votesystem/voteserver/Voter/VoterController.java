@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VoterController {
     
+    private String connectionString = "jdbc:sqlserver://voteshield.database.windows.net;databaseName=voteShield;user=Nate;password=Ghost123";
     //GET
     @RequestMapping(value = "/voters/get", method = RequestMethod.GET)
     public List<Voter> allVoters(@RequestParam(defaultValue = "*") String fullName) {
         List<Voter> response = new ArrayList<Voter>();
 
         Voter aVoter = new Voter();
-        String connectionString = "jdbc:sqlserver://ptc.database.windows.net;databaseName=Database;user=readAndwrite;password=Hellothere668";
         String SQL = "";
         
         if(fullName.equals("*")){
@@ -61,7 +61,6 @@ public class VoterController {
      @RequestParam String race){
         List<Voter> response = new ArrayList<Voter>();
         Voter aVoter = new Voter();
-        String connectionString = "jdbc:sqlserver://ptc.database.windows.net;databaseName=Database;user=readAndwrite;password=Hellothere668";
         String SQL = String.format("insert into voter(fullName, voterID, candidates, party, race) values ('%s', '%d', '%s', '%s', '%s')", fullName, voterID, candidates, party, race);
 
         try {

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VoteserverApplication<voteserver>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.votesystem.voteserver.VoteserverApplication",
+            "projectName": "voteserver",
+            "args": ""
+        }
+    ]
+}
