@@ -22,9 +22,9 @@ public class VoterController {
         String SQL = "";
         
         if(fullName.equals("*")){
-            SQL = "select * from voter";
+            SQL = "select * from politcal";
         }else{
-            SQL = String.format("select * from voter where fullname = '%s'", fullName);
+            SQL = String.format("select * from politcal where Name = '%s'", fullName);
         }
 
         try {
@@ -33,11 +33,9 @@ public class VoterController {
             ResultSet result = stmt.executeQuery(SQL);
             while(result.next()){
                 Voter v = new Voter();
-                v.setFullName(result.getString("fullName"));
-                v.setVoterID(result.getInt("voterID"));
-                v.setCandidates(result.getString("candidates"));
-                v.setParty(result.getString("party"));
-                v.setRace(result.getString("race"));
+                v.setFullName(result.getString("name"));
+                v.setVoterID(result.getInt("fk_Id"));
+                v.setParty(result.getString("politicalParty"));
                 v.setStatus(200);
                 response.add(v);
             }
