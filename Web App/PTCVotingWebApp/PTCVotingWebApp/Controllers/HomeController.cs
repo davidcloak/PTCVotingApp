@@ -28,6 +28,23 @@ namespace PTCVotingWebApp.Controllers
             return View();
         }
 
+        public IActionResult InfoForm()
+        {
+            return View();
+        }
+
+        public IActionResult VoteForm()
+        {
+            List<string> listOfCanadits = new List<string>();
+            listOfCanadits.Add("This will be a list of canadits");
+            listOfCanadits.Add("Joe");
+            listOfCanadits.Add("Bob");
+            listOfCanadits.Add("etc.");
+
+            ViewBag.CandidateList = listOfCanadits;
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
