@@ -1,0 +1,31 @@
+@model PTCVotingWebApp.Models.Voting
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Voting Form";
+}
+
+
+<h1 class="display-4 text-center">Voting Form:</h1>
+<form name="Voting" method="post" asp-action="HealthForm">
+    <div class="form-group">
+        <label asp-for="PoliticalA">Political Alignment:</label>
+        <input asp-for="PoliticalA" class="form-control" id="PoliticalA" placeholder="Political Alignment" />
+    </div>
+    <br>
+ <div class="form-group">
+        <label for="candidateField">Candidate:</label>
+
+        <label asp-for="Canidate">Pick an Candidate:</label>
+        <select asp-for="Canidate" id="Can" class="form-control">
+            <option value="">Pick One</option>
+            @foreach (var pow2 in ViewBag.CandidateList)
+            {
+                <option value="@pow2.Value">@pow2.Text</option>
+            }
+        </select>
+
+    </div>
+     <button type="submit" id="buttonVote" class="btn btn-primary">Submit Info</button>
+    </form>

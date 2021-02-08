@@ -1,0 +1,35 @@
+@model PTCVotingWebApp.Models.PersonalInfo
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Personal Information Form";
+}
+
+
+<h1 class="display-4 text-center">Personal Information Form:</h1>
+<form name="FatTrack" method="post" asp-action="HealthForm">
+    <div class="form-group">
+        <label asp-for="FirstN">First Name:</label>
+        <input asp-for="FirstN" class="form-control" id="FirstN" placeholder="First Name" />
+    </div>
+    <br>
+ <div class="form-group">
+        <label asp-for="LastN">Last Name:</label>
+        <input class="form-control" asp-for="LastN" id="LastN" placeholder="Last Name" />
+    </div>
+    <br>
+    <div class="form-group">
+        <label asp-for="Email">Email:</label>
+        <input class="form-control" asp-for="Email" id="email" placeholder="Email" />
+    </div>
+    <br>
+  <div class="form-group">
+        <label asp-for="Birthday">Date of Birth:</label>
+        <input asp-for="Birthday" id="Birthday" class="form-control" placeholder="xx/xx/xxxx" />
+        <span class="alert-danger" asp-validation-for="Birthday"></span>
+
+    </div>
+    <br>
+      <button type="submit" id="buttonInfo" class="btn btn-primary">Submit Info</button>
+</form>

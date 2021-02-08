@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace PTCVotingWebApp.Models
 {
-    public partial class Voting
+    public partial class PersonalInfo
     {
-        public string Canidate { get; set; }
-        public string PoliticalA { get; set; }
-        public byte? FkVote { get; set; }
+    public string FirstN { get; set; }
+    public string LastN { get; set; }
+    public string Email { get; set; }
+    public DateTime Birthday { get; set; }
 
-        public virtual Politcal FkVoteNavigation { get; set; }
     }
 }
