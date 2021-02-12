@@ -14,5 +14,12 @@ namespace PTCVotingWebApp.Models
         public byte? FkVote { get; set; }
 
         public virtual Politcal FkVoteNavigation { get; set; }
+
+          public List<SelectListItem> CandidateList { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem{Value="Donald Trump",Text="Donald Trump"},
+            new SelectListItem{Value="Joe Biden",Text="Joe Biden"},
+             new SelectListItem{Value="Other",Text="Other"}      
+        };
     }
 }
