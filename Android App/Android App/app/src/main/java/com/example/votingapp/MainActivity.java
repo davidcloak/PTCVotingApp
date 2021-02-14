@@ -4,7 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,13 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void GoToLogin(View view){
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-    }
-
     public void test(View view){
-        Toast.makeText(MainActivity.this, "Not Added Yet :(", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "method called :)", Toast.LENGTH_LONG).show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
