@@ -201,3 +201,5 @@ C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\ne
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUsers\Details.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUsers\Edit.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUsers\Index.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\InfoForm.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\VoteForm.cshtml.g.cs

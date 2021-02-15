@@ -1,7 +1,9 @@
 package com.example.demo.Voter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 import java.sql.*;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VoterController {
     
-    private String connectionString = "jdbc:sqlserver://voteshield.database.windows.net;databaseName=voteShield;user=Nate;password=Ghost123";
+    private String connectionString = "jdbc:sqlserver://voteshield.database.windows.net;databaseName=voteShield;VoteCount=Nate;password=Ghost123";
     //GET
     @RequestMapping(value = "/voters/get", method = RequestMethod.GET)
     public List<Voter> allVoters(@RequestParam(defaultValue = "*") String fullName) {
@@ -22,9 +24,9 @@ public class VoterController {
         String SQL = "";
         
         if(fullName.equals("*")){
-            SQL = "select * from voter";
+            SQL = "select * from politcal";
         }else{
-            SQL = String.format("select * from voter where fullname = '%s'", fullName);
+            SQL = String.format("select * from politcal where Name = '%s'", fullName);
         }
 
         try {
@@ -33,11 +35,9 @@ public class VoterController {
             ResultSet result = stmt.executeQuery(SQL);
             while(result.next()){
                 Voter v = new Voter();
-                v.setFullName(result.getString("fullName"));
-                v.setVoterID(result.getInt("voterID"));
-                v.setCandidates(result.getString("candidates"));
-                v.setParty(result.getString("party"));
-                v.setRace(result.getString("race"));
+                v.setFullName(result.getString("name"));
+                v.setVoterID(result.getInt("fk_Id"));
+                v.setParty(result.getString("politicalParty"));
                 v.setStatus(200);
                 response.add(v);
             }
@@ -84,4 +84,7 @@ public class VoterController {
 
         return response;
      }
+
+
+     
 }
