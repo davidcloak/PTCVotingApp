@@ -1,0 +1,125 @@
+package votingapp;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.junit.Before;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+/**
+ *
+ * @author Jarod
+ */
+
+
+import org.junit.Test;
+
+
+/**
+ *
+ * @author Jarod
+ */
+public class VotingAppTest {
+    WebDriver Driver;
+    URL pagetest;
+    public VotingAppTest() {
+    }
+
+    @Before
+    public void setup() throws MalformedURLException {
+
+        System.setProperty("webdriver.chrome.driver", "C:\\selenium\\chromedriver_win32\\chromedriver.exe");
+        Driver = new ChromeDriver();
+        try {
+            pagetest = new URL("https://localhost:44379/Home");
+        } catch (MalformedURLException ex) {
+
+            Logger.getLogger(VotingAppTest.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+    /*
+    @Test
+    public void Navbar() {
+        Driver.get(pagetest.toString());
+        WebElement nav = Driver.findElement(By.xpath("/html/body/header/nav/div/div/ul/li[2]/a"));
+        nav.click();
+
+    }
+    */
+    
+/*
+  @Test
+    public void forum1() {
+ Driver.get(pagetest.toString());
+     //   WebElement navbar = Driver.findElement (By.xpath("/html/body/header/nav/div/div/ul[2]/li[3]/a"));
+       // navbar.click();
+ 
+        WebElement lname = Driver.findElement(By.xpath("/html/body/div/main/form/div[1]/input"));
+        lname.sendKeys("Jarod");
+
+         WebElement fname = Driver.findElement(By.xpath("/html/body/div/main/form/div[2]/input"));
+        fname.sendKeys("Berger");
+
+         WebElement email = Driver.findElement(By.xpath("/html/body/div/main/form/div[3]/input"));
+        email.sendKeys("jarodberg@homail.com");
+        
+             WebElement DOB = Driver.findElement(By.xpath("/html/body/div/main/form/div[4]/input"));
+        DOB.sendKeys("02/19/2001");
+        
+         WebElement submit = Driver.findElement(By.xpath("/html/body/div/main/form/button"));
+      submit.click();    
+    }*/
+    /*
+  @Test
+    public void reg() {
+ Driver.get(pagetest.toString());
+     //   WebElement navbar = Driver.findElement (By.xpath("/html/body/header/nav/div/div/ul[2]/li[3]/a"));
+       // navbar.click();
+   WebElement email = Driver.findElement(By.xpath("/html/body/div/main/div/div[1]/form/div[2]/input"));
+        email.sendKeys("jarodberg@homail.com");
+        
+        WebElement password = Driver.findElement(By.xpath("/html/body/div/main/div/div[1]/form/div[3]/input"));
+        password.sendKeys("Lol@43");
+
+         WebElement confirmpass = Driver.findElement(By.xpath("/html/body/div/main/div/div[1]/form/div[4]/input"));
+        confirmpass.sendKeys("Lol@43");
+
+     
+         WebElement submit = Driver.findElement(By.xpath("/html/body/div/main/div/div[1]/form/button"));
+      submit.click();    
+    }
+*/
+    /*
+     @Test
+    public void vote() {
+ Driver.get(pagetest.toString());
+     //   WebElement navbar = Driver.findElement (By.xpath("/html/body/header/nav/div/div/ul[2]/li[3]/a"));
+       // navbar.click();
+   WebElement political = Driver.findElement(By.xpath("/html/body/div/main/form/div[1]/input"));
+        political.sendKeys("POG");
+        
+        WebElement cand = Driver.findElement(By.xpath("/html/body/div/main/form/div[2]/select/option[3]"));
+      cand.click();
+    
+         WebElement submit = Driver.findElement(By.xpath("/html/body/div/main/form/button"));
+      submit.click();    
+    }*/
+}
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
