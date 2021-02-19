@@ -2,7 +2,7 @@ package com.example.demo.Voter;
 
 public class Voter {
     private String fullName;
-    private int voterID;
+    private String voterID;
     private String candidates;
     private String party;
     private String race;
@@ -11,7 +11,7 @@ public class Voter {
     public Voter() {
     }
 
-    public Voter(String fullName, int voterID, String candidates, String party, String race, int status) {
+    public Voter(String fullName, String voterID, String candidates, String party, String race, int status) {
         this.fullName = fullName;
         this.voterID = voterID;
         this.candidates = candidates;
@@ -28,11 +28,11 @@ public class Voter {
         this.fullName = fullName;
     }
 
-    public int getVoterID() {
+    public String getVoterID() {
         return voterID;
     }
 
-    public void setVoterID(int voterID) {
+    public void setVoterID(String voterID) {
         this.voterID = voterID;
     }
 
