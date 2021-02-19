@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VoterController {
     
-    private String connectionString = "jdbc:sqlserver://voteshield.database.windows.net;databaseName=voteShield;VoteCount=Nate;password=Ghost123";
+    private String connectionString = "jdbc:sqlserver://voteshield.database.windows.net;databaseName=voteShield;user=Nate;password=Ghost123";
     //GET
     @RequestMapping(value = "/voters/get", method = RequestMethod.GET)
     public List<Voter> allVoters(@RequestParam(defaultValue = "*") String fullName) {
@@ -35,7 +35,7 @@ public class VoterController {
             while(result.next()){
                 Voter v = new Voter();
                 v.setFullName(result.getString("name"));
-                v.setVoterID(result.getInt("fk_Id"));
+                v.setVoterID(result.getString("fk_Id"));
                 v.setParty(result.getString("politicalParty"));
                 v.setStatus(200);
                 response.add(v);
@@ -53,7 +53,7 @@ public class VoterController {
      //POST
      @RequestMapping(value = "/voters/post", method = RequestMethod.POST)
      public List<Voter> newVoter(@RequestParam String fullName,
-     @RequestParam int voterID,
+     @RequestParam String voterID,
      @RequestParam String candidates,
      @RequestParam String party,
      @RequestParam String race){
