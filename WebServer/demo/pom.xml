@@ -45,8 +45,8 @@
         <version>1.7.0</version>  
         <configuration>
           <schemaVersion>V2</schemaVersion>
-          <resourceGroup>demo-1613679057584-rg</resourceGroup>
-          <appName>demo-1613679057584</appName>
+          <resourceGroup>votingAPIPlan</resourceGroup>
+          <appName>PTCvotingAPI</appName>
           <pricingTier>F1</pricingTier>
           <region>centralus</region>
 		  <appSettings>

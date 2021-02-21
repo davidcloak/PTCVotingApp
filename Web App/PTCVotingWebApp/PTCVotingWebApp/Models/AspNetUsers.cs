@@ -15,7 +15,6 @@ namespace PTCVotingWebApp.Models
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
-            Politcal = new HashSet<Politcal>();
         }
 
         public string Id { get; set; }
@@ -38,6 +37,5 @@ namespace PTCVotingWebApp.Models
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual ICollection<Politcal> Politcal { get; set; }
     }
 }

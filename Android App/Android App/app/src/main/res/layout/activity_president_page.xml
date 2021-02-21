@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CAA9E3"
+    tools:context=".president_page">
+
+    <TextView
+        android:id="@+id/president1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Donald Trump"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <TextView
+        android:id="@+id/president1Party"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Party: Republican "
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <TextView
+        android:id="@+id/president2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Joe Biden"
+        android:textAlignment="center"
+        android:textColor="#B400FF"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.516" />
+
+    <TextView
+        android:id="@+id/president2Party"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Party: Democratic"
+        android:textAlignment="center"
+        android:textColor="#B400FF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.589" />
+
+    <ImageButton
+        android:id="@+id/president1Img"
+        android:layout_width="206dp"
+        android:layout_height="158dp"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:maxWidth="200sp"
+        android:maxHeight="200sp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/president1Party"
+        app:layout_constraintVertical_bias="0.087"
+        app:srcCompat="@drawable/donald_trump" />
+
+    <ImageButton
+        android:id="@+id/president2Img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:maxWidth="200sp"
+        android:maxHeight="200sp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/president2Party"
+        app:srcCompat="@drawable/joe_biden" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

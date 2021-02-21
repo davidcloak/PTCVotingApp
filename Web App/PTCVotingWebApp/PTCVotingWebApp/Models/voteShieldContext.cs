@@ -27,6 +27,7 @@ namespace PTCVotingWebApp.Models
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Politcal> Politcal { get; set; }
+        public virtual DbSet<Race> Race { get; set; }
         public virtual DbSet<Voting> Voting { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -140,47 +141,65 @@ namespace PTCVotingWebApp.Models
 
             modelBuilder.Entity<Politcal>(entity =>
             {
-                entity.HasKey(e => e.Vote)
-                    .HasName("PK__Politcal__73E4AA2A8DE4EFCD");
+                entity.HasKey(e => e.Politcal1)
+                    .HasName("PK__Politcal__3D06CD3EE67EE2B5");
 
-                entity.Property(e => e.Vote).HasColumnName("vote");
+                entity.Property(e => e.Politcal1).HasColumnName("politcal");
 
                 entity.Property(e => e.FkId)
+                    .IsRequired()
                     .HasColumnName("fk_Id")
                     .HasMaxLength(450);
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(45)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PoliticalParty)
+                    .IsRequired()
                     .HasColumnName("politicalParty")
-                    .HasMaxLength(3)
+                    .HasMaxLength(25)
                     .IsUnicode(false);
+            });
 
-                entity.HasOne(d => d.Fk)
-                    .WithMany(p => p.Politcal)
-                    .HasForeignKey(d => d.FkId)
-                    .HasConstraintName("FK__Politcal__fk_Id__08B54D69");
+            modelBuilder.Entity<Race>(entity =>
+            {
+                entity.HasKey(e => e.Pk)
+                    .HasName("PK__race__321403CFDE1751FB");
+
+                entity.ToTable("race");
+
+                entity.Property(e => e.Pk).HasColumnName("pk");
+
+                entity.Property(e => e.FkPolitcal).HasColumnName("fk_politcal");
+
+                entity.Property(e => e.Race1)
+                    .IsRequired()
+                    .HasColumnName("race")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Voting>(entity =>
             {
-                entity.HasKey(e => e.Canidate)
-                    .HasName("PK__voting__55DAE775384E11A6");
+                entity.HasKey(e => e.Voting1)
+                    .HasName("PK__voting__79F59D1304748605");
 
                 entity.ToTable("voting");
 
+                entity.Property(e => e.Voting1).HasColumnName("voting");
+
                 entity.Property(e => e.Canidate)
-                    .HasMaxLength(45)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.FkVote).HasColumnName("fk_vote");
-
-                entity.HasOne(d => d.FkVoteNavigation)
-                    .WithMany(p => p.Voting)
-                    .HasForeignKey(d => d.FkVote)
-                    .HasConstraintName("FK__voting__fk_vote__0D7A0286");
+                entity.Property(e => e.FkRace)
+                    .IsRequired()
+                    .HasColumnName("fk_race")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,0 +1,94 @@
+﻿@model PTCVotingWebApp.Models.Politcian
+@{
+}
+
+<h1>Form Creations</h1>
+<form method="post">
+    <input asp-for="title" placeholder="title" />
+    @if (ViewData["HasOnePol"].Equals("true"))
+    {
+        @foreach (var pol in ViewBag.PoliticianHolder)
+        {
+            if (ViewData["update"].Equals("true") && pol.name.Equals(ViewData["oldName"]))
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-10">
+                                    <input asp-for="name" value="@pol.name" placeholder="People" />
+                                    @*<p>@pol.name</p>*@
+                                </div>
+                                @*<div class="col-2">
+                                        <button class="btn-primary" name="edit" value="@pol.name">Edit</button>
+                                    </div>*@
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input asp-for="party" value="@pol.party" placeholder="People" />
+                                    @*<p>@pol.party</p>*@
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn-primary" name="save" value="@pol.name">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-10">
+                                    @*<input value="@pol.name" placeholder="People" />*@
+                                    <p>@pol.name</p>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn-primary" name="edit" value="@pol.name">Edit</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    @*<input value="@pol.party" placeholder="People" />*@
+                                    <p>@pol.party</p>
+                                </div>
+                                @*<div class="col-2">
+                                        <button class="btn-primary" name="save" value="1">Save</button>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+    @if (ViewData["update"].Equals("false"))
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <input asp-for="name" value="" placeholder="Name" />
+                            </div>
+                            <div class="row">
+                                <input asp-for="party" value="" placeholder="Party" />
+                            </div>
+                        </div>
+                        @*<div class="col-2">
+                                <button class="btn-primary">Edit</button>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <button type="submit">Add</button>
+    <button type="submit" name="Done" value="done">Finished</button>
+</form>
+
