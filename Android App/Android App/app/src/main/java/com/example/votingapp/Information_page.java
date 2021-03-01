@@ -20,7 +20,7 @@ public class Information_page extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information_page);
 
-        button = findViewById(R.id.homeButton);
+        button = findViewById(R.id.informationButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

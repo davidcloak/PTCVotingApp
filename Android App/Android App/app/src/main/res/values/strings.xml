@@ -61,7 +61,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="username">Username (Voter ID)</string>
+    <string name="username">Username (Email)</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="not_registered_yet">Not Registered Yet?</string>
@@ -70,4 +70,5 @@
     <string name="already_registered">Already Registered?</string>
     <string name="backlogin">Back to Login</string>
     <string name="create">Create</string>
+    <string name="i_am_not_a_robot">I am not a robot</string>
 </resources>

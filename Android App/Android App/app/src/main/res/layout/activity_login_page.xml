@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="193dp"
         android:layout_height="128dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="70dp"
         app:srcCompat="@drawable/logo" />
 
     <EditText
@@ -31,6 +31,16 @@
         android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:hint="@string/password"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/captchaBox"
+        android:text="I'm not a robot"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"/>
+
 
     <Button
         android:id="@+id/login"
