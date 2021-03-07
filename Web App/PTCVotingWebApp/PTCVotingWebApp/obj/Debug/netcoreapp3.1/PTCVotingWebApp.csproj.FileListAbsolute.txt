@@ -214,3 +214,4 @@ C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\ne
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Politcals\Edit.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Politcals\Index.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Races\FormCreate.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\app.cshtml.g.cs
