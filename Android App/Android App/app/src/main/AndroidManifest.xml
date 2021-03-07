@@ -3,9 +3,6 @@
     package="com.example.votingapp">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VotingApp">
-        <activity android:name=".register_page"></activity>
-        <activity android:name=".login_page" />
-        <activity android:name=".poll_page" />
-        <activity android:name=".president_page" />
-        <activity android:name=".race_page" />
+        <activity android:name=".race_page"></activity>
         <activity android:name=".Information_page" />
         <activity android:name=".home_page" />
         <activity android:name=".MainActivity">
