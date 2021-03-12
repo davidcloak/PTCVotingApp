@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -46,6 +49,8 @@ public class login_page extends AppCompatActivity implements GoogleApiClient.Con
     TextView register;
     LinearLayout ly;
 
+
+
     GoogleApiClient googleApiClient;
     Connection con;
     String siteKey = "6Lez-GcaAAAAAJqDyB-rhEN23w_Uh90yAfvASwmA";
@@ -57,9 +62,9 @@ public class login_page extends AppCompatActivity implements GoogleApiClient.Con
 
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
-        password.setVisibility(View.GONE);
         captchaBox = (CheckBox)findViewById(R.id.captchaBox);
         ly = findViewById(R.id.ly);
+
 
         //Google Api
         googleApiClient = new GoogleApiClient.Builder(this).addApi(SafetyNet.API).addConnectionCallbacks(login_page.this).build();

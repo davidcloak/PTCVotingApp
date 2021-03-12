@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.os.StrictMode;
-
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +29,10 @@ import java.sql.Statement;
 
 //ID
 import java.util.UUID;
-import android.telephony.TelephonyManager;
-import android.content.Context;
+
+//Device id
+import android.provider.Settings.Secure;
+
 
 public class register_page extends AppCompatActivity {
 
@@ -52,9 +54,7 @@ public class register_page extends AppCompatActivity {
 
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
-        password.setVisibility(View.GONE);
         confirmPassword = (EditText)findViewById(R.id.confirmPassword);
-        confirmPassword.setVisibility(View.GONE);
         status = (TextView)findViewById(R.id.status);
         ly = findViewById(R.id.ly);
 
@@ -145,8 +145,7 @@ public class register_page extends AppCompatActivity {
         UUID uuid = UUID.randomUUID();
 
         //Device id
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceId = telephonyManager.getDeviceId();
+        String deviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         @Override
         protected void onPreExecute() {
@@ -162,12 +161,12 @@ public class register_page extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try{
-                con = connectionClass(ConnectionClass.user.toString(),ConnectionClass.pass.toString(),ConnectionClass.database.toString(),ConnectionClass.server.toString());
+                con = connectionClass(ConnectionClass.user,ConnectionClass.pass,ConnectionClass.database,ConnectionClass.server);
                 if(con == null){
                     message = "Connection Error";
                 }
                 else {                                                                                                                                                                                                                                                                  //id                        //username                  //NormalizedUserName                                    //Email                //EmailConfirmed     //Password            //Phone  //TwoFactor   //Lockout   //AccessFailed
-                    String sql = "Insert into AspNetUsers (Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount,deviceID) values ('" + uuid.toString() + "','" + username.getText() + "','" + username.getText().toString().toUpperCase() + "','" + username.getText() + "','" + username.getText().toString().toUpperCase() + "','" + 0 + "','" + password.getText() + "','" + null + "','" + null + "','" + null + "','" + 0 + "','" + 0 + "','" + 1 + "','" + 0 + "' , '" +  deviceId + "')";
+                    String sql = "Insert into AspNetUsers (Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount,deviceID) values ('" + uuid.toString() + "','" + username.getText() + "','" + username.getText().toString().toUpperCase() + "','" + username.getText() + "','" + username.getText().toString().toUpperCase() + "','" + 0 + "','" + password.getText() + "','" + null + "','" + null + "','" + null + "','" + 0 + "','" + 0 + "','" + 1 + "','" + 0 + "' , '" + deviceID + "')";
                     stmt = con.createStatement();
                     stmt.executeUpdate(sql);
                 }
