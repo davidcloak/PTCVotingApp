@@ -1,52 +1,51 @@
 ﻿@model IEnumerable<PTCVotingWebApp.Models.AspNetUsers>
 
 @{
-    ViewData["Title"] = "Registered Users";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Registered Users</h1>
+<h1>Index</h1>
 
-@*<p>
+<p>
     <a asp-action="Create">Create New</a>
-</p>*@
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @*@Html.DisplayNameFor(model => model.UserName)*@
-                Name
+                @Html.DisplayNameFor(model => model.UserName)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.NormalizedUserName)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.NormalizedEmail)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EmailConfirmed)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>*@
-           @* <th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.SecurityStamp)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.LockoutEnd)
             </th>
@@ -65,13 +64,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.NormalizedUserName)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.NormalizedEmail)
             </td>
             <td>
@@ -94,7 +93,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LockoutEnd)
             </td>
