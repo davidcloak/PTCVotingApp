@@ -29,15 +29,10 @@ public class home_page extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfoPage();
+                Intent intent = new Intent(home_page.this, Information_page.class);
+                intent.putExtra("keyname", username);
+                startActivity(intent);
             }
         });
-    }
-
-    public void openInfoPage(){
-        String name = welcome.getText().toString();
-        Intent intent = new Intent(this, Information_page.class);
-        intent.putExtra("keyname", name);
-        startActivity(intent);
     }
 }
