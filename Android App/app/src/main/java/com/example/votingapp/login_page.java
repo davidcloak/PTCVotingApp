@@ -107,7 +107,6 @@ public class login_page extends AppCompatActivity implements GoogleApiClient.Con
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                     new login_page.loginUser().execute("");
             }
         });
@@ -169,7 +168,7 @@ public class login_page extends AppCompatActivity implements GoogleApiClient.Con
         @Override
         protected String doInBackground(String... strings) {
 
-            con = connectionClass(ConnectionClass.user.toString(),ConnectionClass.pass.toString(),ConnectionClass.database.toString(),ConnectionClass.server.toString());
+            con = connectionClass(ConnectionClass.user,ConnectionClass.pass,ConnectionClass.database,ConnectionClass.server);
             if(con == null){
                 runOnUiThread(new Runnable() {
                     @Override
