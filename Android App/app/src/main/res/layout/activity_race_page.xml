@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CAA9E3"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".race_page">
+
+    <TextView
+        android:id="@+id/raceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:text="Choose the Race to Vote"
+        android:textColor="#707070"
+        android:textSize="35sp" />
+
+    <Button
+        android:id="@+id/race0Button"
+        android:layout_width="126dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        app:backgroundTint="#FFFFFF" />
+
+    <Button
+        android:id="@+id/race1Button"
+        android:layout_width="126dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        app:backgroundTint="#FFFFFF" />
+
+    <Button
+        android:id="@+id/race2Button"
+        android:layout_width="126dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        app:backgroundTint="#FFFFFF" />
+
+    <Button
+        android:id="@+id/race3Button"
+        android:layout_width="126dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        app:backgroundTint="#FFFFFF" />
+
+    <Button
+        android:id="@+id/race4Button"
+        android:layout_width="126dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        app:backgroundTint="#FFFFFF" />
+
+</LinearLayout>
