@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -17,6 +18,7 @@ namespace PTCVotingWebApp.Models
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
         }
 
+        [Key]
         public string Id { get; set; }
         public string UserName { get; set; }
         public string NormalizedUserName { get; set; }
@@ -32,6 +34,7 @@ namespace PTCVotingWebApp.Models
         public DateTimeOffset? LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
+        public string DeviceId { get; set; }
 
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }

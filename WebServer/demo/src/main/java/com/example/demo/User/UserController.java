@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.example.demo.Voter.Races;
 import com.example.demo.Voter.VoteCount;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.*;
 
@@ -111,10 +113,10 @@ public class UserController {
  
       //Races list of people in the race
     @RequestMapping(value = "/getRaces", method = RequestMethod.GET)
-    public List<Races> GetRaces(){
+    public String GetRaces() throws JsonProcessingException{
         List<Races> response = new ArrayList<Races>();
         Races aVoteCount = new Races();
-        String SQL = "select race from race group by race";
+        String SQL = "select race, locationID from race group by race, locationID";
 
         try {
             Connection con = DriverManager.getConnection(connectionString);
@@ -129,15 +131,30 @@ public class UserController {
                 Statement stmt2 = con2.createStatement();
                 ResultSet result2 = stmt2.executeQuery(SQL2);
 
-                ArrayList<String[]> runners = new ArrayList<String[]>();
+                List<Pol> runners = new ArrayList<Pol>();
                 while(result2.next()){
-                    String[] runner = new String[2];
-                    runner[0] = result2.getString("Name");
-                    runner[1] = result2.getString("politicalParty");
-                    runners.add(runner);
+                    Pol pol = new Pol();
+                    pol.setName(result2.getString("Name"));
+                    pol.setPoliticalParty(result2.getString("politicalParty"));
+                    runners.add(pol);
                 }
-
+                
                 Races v = new Races();
+
+                String SQL3 = String.format("select * from Location where locationID = '%s'", result.getInt("locationID")+"");
+
+                Connection con3 = DriverManager.getConnection(connectionString);
+                Statement stmt3 = con3.createStatement();
+                ResultSet result3 = stmt3.executeQuery(SQL3);
+                if(result3.next()){
+                    v.setState(result3.getString("state"));
+                    v.setCity(result3.getString("city"));
+                }else{
+                    v.setState("Not Added Yet");
+                    v.setCity("Note Added Yet");
+                }
+                
+
                 v.setRunners(runners);
                 v.setRace(race);
                 response.add(v);
@@ -148,6 +165,7 @@ public class UserController {
             response.add(aVoteCount);
         }
         
-        return response;
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(response);
     }
 }

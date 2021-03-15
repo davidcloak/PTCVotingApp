@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PTCVotingWebApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/theme.css" />
@@ -13,7 +14,6 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <img alt="Flag" title="Flag" class="img-fluid" src="~/images/usflag.png" />
-                <img alt="Flag" title="Flag" class="img-fluid" src="~/usflag.png"/>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PTCVotingWebApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,13 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="app">Get The App</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="AspNetUsers" asp-action="Index">Display Users</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Races" asp-action="FormCreate">Form Creation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Races" asp-action="Poles">Display Forms</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" style="right: 0;"/>

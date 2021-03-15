@@ -27,7 +27,7 @@ using PTCVotingWebApp.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9ff395314e526b5f0743cedb625587d80f4568ce", @"/Views/Races/FormCreate.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c5ea470e98a17a57e2edaf1692c53fd057e8198d", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ef765232e14474621993b1092cdf6b7a6743052b", @"/Views/_ViewImports.cshtml")]
     public class Views_Races_FormCreate : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<PTCVotingWebApp.Models.Politcian>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("placeholder", new global::Microsoft.AspNetCore.Html.HtmlString("title"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
