@@ -58,6 +58,7 @@ public class UserController {
                     v.setLockoutEnd(result.getString("LockoutEnd"));
                     v.setLockoutEnabled(result.getString("LockoutEnabled"));
                     v.setAccessFailedCount(result.getString("AccessFailedCount"));
+                    v.setDeviceID(result.getString("deviceID"));
                     v.setStatus("200");
                     response.add(v);
                 }
@@ -113,7 +114,7 @@ public class UserController {
  
       //Races list of people in the race
     @RequestMapping(value = "/getRaces", method = RequestMethod.GET)
-    public String GetRaces() throws JsonProcessingException{
+    public List<Races> GetRaces() throws JsonProcessingException{
         List<Races> response = new ArrayList<Races>();
         Races aVoteCount = new Races();
         String SQL = "select race, locationID from race group by race, locationID";
@@ -136,6 +137,8 @@ public class UserController {
                     Pol pol = new Pol();
                     pol.setName(result2.getString("Name"));
                     pol.setPoliticalParty(result2.getString("politicalParty"));
+                    pol.setDescription(result2.getString("description"));
+                    pol.setImageURL(result2.getString("imageURL"));
                     runners.add(pol);
                 }
                 
@@ -165,7 +168,6 @@ public class UserController {
             response.add(aVoteCount);
         }
         
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(response);
+        return response;
     }
 }
