@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.*;
 
+import com.example.demo.Tools.Tools;
+
 @RestController
 @SpringBootApplication
 public class DemoApplication {
+
+	Tools t = new Tools();
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);

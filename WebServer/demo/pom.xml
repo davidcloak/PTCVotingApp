@@ -46,7 +46,7 @@
         <configuration>
           <schemaVersion>V2</schemaVersion>
           <resourceGroup>votingAPIPlan</resourceGroup>
-          <appName>PTCvotingAPI2</appName>
+          <appName>PTCvotingAPI</appName>
           <pricingTier>F1</pricingTier>
           <region>centralus</region>
 		  <appSettings>

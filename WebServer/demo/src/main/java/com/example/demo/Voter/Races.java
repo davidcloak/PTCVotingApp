@@ -1,6 +1,5 @@
 package com.example.demo.Voter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.User.Pol;

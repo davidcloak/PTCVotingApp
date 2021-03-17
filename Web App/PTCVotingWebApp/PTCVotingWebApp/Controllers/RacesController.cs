@@ -24,14 +24,10 @@ namespace PTCVotingWebApp.Controllers
 
         public IActionResult Poles()
         {
-            string api = "http://localhost:8080/getRaces";
+            string api = "https://ptcvotingapi.azurewebsites.net/getRaces";
             var webClient = new WebClient();
             string rawJSON = webClient.DownloadString(api);
-            //rawJSON = rawJSON.Substring(1, rawJSON.Length - 2);
             rawJSON = "{ \"Holder\": " + rawJSON + "}";
-            /*rawJSON = rawJSON.Replace("[", "");
-            rawJSON = rawJSON.Replace("]", "");*/
-            //convert the JSON string to a serise of objects
             PoleHolderModel poles = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON);
             ViewBag.poles = poles.Holder.ToArray();
             ViewData["test"] = rawJSON;
