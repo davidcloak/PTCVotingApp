@@ -103,7 +103,7 @@ public class login_page extends AppCompatActivity implements GoogleApiClient.Con
 
         //Login
         login = (Button)findViewById(R.id.login);
-        login.setVisibility(View.GONE);
+        //login.setVisibility(View.GONE);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

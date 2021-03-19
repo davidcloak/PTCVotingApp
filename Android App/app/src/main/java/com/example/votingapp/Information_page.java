@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,15 +28,20 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.votingapp.Connection.ConnectionClass;
+import com.google.android.gms.common.internal.Constants;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Information_page extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -52,91 +60,52 @@ public class Information_page extends AppCompatActivity implements AdapterView.O
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //send get request to API
-                //Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(Information_page.this);
-                String url ="https://ptcvotingapi.azurewebsites.net/getRaces";
-
-                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //First race
-                        String race0 = "";
-                        try {
-                            JSONObject raceInfo = response.getJSONObject(0);
-                            race0 = raceInfo.getString("race");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Second Race
-                        String race1 = "";
-                        try {
-                            JSONObject raceInfo = response.getJSONObject(1);
-                            race1 = raceInfo.getString("race");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Third Race
-                        String race2 = "";
-                        try {
-                            JSONObject raceInfo = response.getJSONObject(2);
-                            race2 = raceInfo.getString("race");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Fourth Race
-                        String race3 = "";
-                        try {
-                            JSONObject raceInfo = response.getJSONObject(3);
-                            race3 = raceInfo.getString("race");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Fifth race
-                        String race4 = "";
-                        try {
-                            JSONObject raceInfo = response.getJSONObject(4);
-                            race4 = raceInfo.getString("race");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Use the race info from API put to race page button, then open race page
-                        Intent intent = new Intent(Information_page.this, race_page.class);
-                        intent.putExtra("race0", race0);
-                        intent.putExtra("race1", race1);
-                        intent.putExtra("race2", race2);
-                        intent.putExtra("race3", race3);
-                        intent.putExtra("race4", race4);
-                        startActivity(intent);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Information_page.this, "Something wrong when get response from API", Toast.LENGTH_LONG).show();
-                    }
-                });
-                queue.add(request);
+                apiConnect();
             }
         });
 
-        name = findViewById(R.id.editName);
-        //from home page, use user name to put here. Will use it as a key to connect to database
-        String username = getIntent().getStringExtra("keyname");
-        name.setText(username);
+                name = findViewById(R.id.editName);
+                //from home page, use user name to put here. Will use it as a key to connect to database
+                String username = getIntent().getStringExtra("keyname");
+                name.setText(username);
 
-        //State spinner
-        Spinner spinner = findViewById(R.id.stateSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.state, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+                //State spinner
+                Spinner spinner = findViewById(R.id.stateSpinner);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.state, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                spinner.setOnItemSelectedListener(this);
+            }
+
+    public void apiConnect(){
+        //send get request to API
+        //Instantiate the RequestQueue.
+
+        RequestQueue queue = Volley.newRequestQueue(Information_page.this);
+        String url ="https://ptcvotingapi.azurewebsites.net/getRaces";
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Toast.makeText(Information_page.this, response.toString(), Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                String creds = String.format("%s:%s","ShhhImASecret","ShhhImABiggerSecret123@");
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", auth);
+                return headers;
+            }
+        };
+        queue.add(request);
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
