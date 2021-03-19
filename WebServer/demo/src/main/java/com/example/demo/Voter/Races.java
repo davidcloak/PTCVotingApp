@@ -1,24 +1,30 @@
 package com.example.demo.Voter;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import com.example.demo.User.Pol;
 
 public class Races {
-    ArrayList<String[]> Runners;
+    List<Pol> Runners;
     String Race;
+    String state;
+    String City;
 
     public Races() {
     }
 
-    public Races(ArrayList<String[]> runners, String race) {
+    public Races(List<Pol> runners, String race, String state, String city) {
         Runners = runners;
         Race = race;
+        this.state = state;
+        City = city;
     }
 
-    public ArrayList<String[]> getRunners() {
+    public List<Pol> getRunners() {
         return Runners;
     }
 
-    public void setRunners(ArrayList<String[]> runners) {
+    public void setRunners(List<Pol> runners) {
         Runners = runners;
     }
 
@@ -30,5 +36,21 @@ public class Races {
         Race = race;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
+    }
+    
     
 }

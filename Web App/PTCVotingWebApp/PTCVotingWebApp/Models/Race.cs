@@ -14,5 +14,6 @@ namespace PTCVotingWebApp.Models
         public int FkPolitcal { get; set; }
         [Key]
         public int Pk { get; set; }
+        public int? LocationId { get; set; }
     }
 }

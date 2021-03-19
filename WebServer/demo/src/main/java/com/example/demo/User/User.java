@@ -16,6 +16,7 @@ public class User {
     String LockoutEnd;
     String LockoutEnabled;
     String AccessFailedCount;
+    String deviceID;
     String setStatus;
 
     public User() {
@@ -24,7 +25,7 @@ public class User {
     public User(String id, String userName, String normalizedUserName, String email, String normalizedEmail,
             String emailConfirmed, String passwordHash, String securityStamp, String concurrencyStamp,
             String phoneNumber, String phoneNumberConfirmed, String twoFactorEnabled, String lockoutEnd,
-            String lockoutEnabled, String accessFailedCount, String setStatus) {
+            String lockoutEnabled, String accessFailedCount, String deviceID, String setStatus) {
         Id = id;
         UserName = userName;
         NormalizedUserName = normalizedUserName;
@@ -40,6 +41,7 @@ public class User {
         LockoutEnd = lockoutEnd;
         LockoutEnabled = lockoutEnabled;
         AccessFailedCount = accessFailedCount;
+        this.deviceID = deviceID;
         this.setStatus = setStatus;
     }
 
@@ -161,6 +163,14 @@ public class User {
 
     public void setAccessFailedCount(String accessFailedCount) {
         AccessFailedCount = accessFailedCount;
+    }
+
+    public String getDeviceID() {
+        return deviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        this.deviceID = deviceID;
     }
 
     public String getStatus() {

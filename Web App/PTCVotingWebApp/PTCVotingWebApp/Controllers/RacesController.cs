@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PTCVotingWebApp.Models;
 
 namespace PTCVotingWebApp.Controllers
@@ -17,6 +20,18 @@ namespace PTCVotingWebApp.Controllers
         public RacesController(voteShieldContext context)
         {
             _context = context;
+        }
+
+        public IActionResult Poles()
+        {
+            string api = "https://ptcvotingapi.azurewebsites.net/getRaces";
+            var webClient = new WebClient();
+            string rawJSON = webClient.DownloadString(api);
+            rawJSON = "{ \"Holder\": " + rawJSON + "}";
+            PoleHolderModel poles = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON);
+            ViewBag.poles = poles.Holder.ToArray();
+            ViewData["test"] = rawJSON;
+            return View();
         }
 
         public IActionResult FormCreate()

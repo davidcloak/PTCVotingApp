@@ -26,6 +26,8 @@ namespace PTCVotingWebApp.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<HelpRequests> HelpRequests { get; set; }
+        public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Politcal> Politcal { get; set; }
         public virtual DbSet<Race> Race { get; set; }
         public virtual DbSet<Voting> Voting { get; set; }
@@ -130,6 +132,11 @@ namespace PTCVotingWebApp.Models
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+                entity.Property(e => e.DeviceId)
+                    .HasColumnName("deviceID")
+                    .HasMaxLength(450)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Email).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
@@ -137,6 +144,51 @@ namespace PTCVotingWebApp.Models
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<HelpRequests>(entity =>
+            {
+                entity.HasKey(e => e.ProblemId)
+                    .HasName("PK__helpRequ__EB5A43CC8D1DCDDB");
+
+                entity.ToTable("helpRequests");
+
+                entity.Property(e => e.ProblemId).HasColumnName("problemID");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.Problem)
+                    .IsRequired()
+                    .HasMaxLength(55)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Solve).HasColumnName("solve");
+            });
+
+            modelBuilder.Entity<Location>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.City)
+                    .HasColumnName("city")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LocationId)
+                    .HasColumnName("locationID")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.State)
+                    .IsRequired()
+                    .HasColumnName("state")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Politcal>(entity =>
@@ -173,6 +225,8 @@ namespace PTCVotingWebApp.Models
                 entity.Property(e => e.Pk).HasColumnName("pk");
 
                 entity.Property(e => e.FkPolitcal).HasColumnName("fk_politcal");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationID");
 
                 entity.Property(e => e.Race1)
                     .IsRequired()
