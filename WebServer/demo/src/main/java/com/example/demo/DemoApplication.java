@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,12 @@ public class DemoApplication {
 	}
 
 	@RequestMapping("/")
-	public String home(){
-		return "<h1>Databse is alive</h1>";
+	public String home(@RequestHeader("Authorization") String auth){
+		if(t.isUser(auth).getAccessLevel().equals("Good")){
+			return "<h1>Databse is alive and authed</h1>";
+		}else{
+			return "<h1>Database is alive but not authed</h1>";
+		}
 	}
 
 	@RequestMapping("/getColors")

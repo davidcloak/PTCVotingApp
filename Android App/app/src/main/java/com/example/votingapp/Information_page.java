@@ -8,7 +8,6 @@ import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,14 +28,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.votingapp.Connection.ConnectionClass;
+import com.example.votingapp.RacesHolders.RacesHolder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.internal.Constants;
 
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpHeaders;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -48,6 +53,10 @@ public class Information_page extends AppCompatActivity implements AdapterView.O
 
     private Button button;
     private TextView name;
+
+    //Variable for the Races
+    RacesHolder races = new RacesHolder();
+
 
     Connection con;
 
@@ -64,46 +73,82 @@ public class Information_page extends AppCompatActivity implements AdapterView.O
             }
         });
 
-                name = findViewById(R.id.editName);
-                //from home page, use user name to put here. Will use it as a key to connect to database
-                String username = getIntent().getStringExtra("keyname");
-                name.setText(username);
+        name = findViewById(R.id.editName);
+        //from home page, use user name to put here. Will use it as a key to connect to database
+        String username = getIntent().getStringExtra("keyname");
+        name.setText(username);
 
-                //State spinner
-                Spinner spinner = findViewById(R.id.stateSpinner);
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.state, android.R.layout.simple_spinner_item);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-                spinner.setOnItemSelectedListener(this);
-            }
+        //State spinner
+        Spinner spinner = findViewById(R.id.stateSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.state, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
 
-    public void apiConnect(){
-        //send get request to API
-        //Instantiate the RequestQueue.
+    //Builds the Auth header for the API
+    public static String buildAuth(String username, String password){
+        String temp = username+":"+password;
+        byte[] encoded = Base64.encodeBase64(temp.getBytes(Charset.forName("US-ASCII")));
+        String authHeader = "Basic "+ new String(encoded);
+        return authHeader;
+    }
 
-        RequestQueue queue = Volley.newRequestQueue(Information_page.this);
-        String url ="https://ptcvotingapi.azurewebsites.net/getRaces";
+    //converts JSON to Races
+    public void JSONtoClassRace(String Json){
+        try{
+            //reads what was gathured
+            ObjectMapper mapper = new ObjectMapper();
+            races = mapper.readValue(Json, RacesHolder.class);
+        }catch(Exception ex){
+            Log.e("Error", ex.toString());
+        }
+    }
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+    public void apiConnect() {
+        StringRequest request = new StringRequest(Request.Method.GET, "https://ptcvotingapi.azurewebsites.net/getRaces", new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                Toast.makeText(Information_page.this, response.toString(), Toast.LENGTH_LONG).show();
+            public void onResponse(String response) {
+                if (!response.equals(null)) {
+                    response = "{ \"races\": " + response + "}";
+                    Log.e("Your Array Response", response);
+                    JSONtoClassRace(response);
+                    Log.e("called converter", races.getRaces().get(0).getRace());
+                } else {
+                    Log.e("Your Array Response", "Data Null");
+                }
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                Log.e("error is ", "" + error);
             }
-        }){
+        }) {
+
+            //This is for Headers If You Needed
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                String creds = String.format("%s:%s","ShhhImASecret","ShhhImABiggerSecret123@");
-                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.NO_WRAP);
-                headers.put("Authorization", auth);
+                Log.e("getHeaders", "Called :)");
+                String auth = buildAuth("ShhhImASecret", "ShhhImABiggerSecret123@");
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put(HttpHeaders.AUTHORIZATION, auth);
                 return headers;
             }
+
+            //Pass Your Parameters here
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //No Parameters for this one..
+                return params;
+            }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
     }
 
