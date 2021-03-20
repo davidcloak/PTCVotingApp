@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PTCVotingWebApp.Models
 {
     public class PolesModel
     {
-       List<RunnerModel> runners;
+        List<RunnerModel> runners;
         string state;
         string city;
         string race;

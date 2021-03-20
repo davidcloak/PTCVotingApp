@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PTCVotingWebApp.Models;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace PTCVotingWebApp.Controllers
 {
@@ -22,15 +19,28 @@ namespace PTCVotingWebApp.Controllers
             _context = context;
         }
 
+        string username = "ShhhImASecret";
+        string password = "ShhhImABiggerSecret123@";
+
+
         public IActionResult Poles()
         {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
             string api = "https://ptcvotingapi.azurewebsites.net/getRaces";
             var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
             string rawJSON = webClient.DownloadString(api);
+
+
+            /*var response = GetResponse(api);
+            string rawJSON = response.Content;*/
+
             rawJSON = "{ \"Holder\": " + rawJSON + "}";
             PoleHolderModel poles = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON);
             ViewBag.poles = poles.Holder.ToArray();
-            ViewData["test"] = rawJSON;
+            ViewData["test"] = rawJSON + " " + authInfo;
             return View();
         }
 
@@ -43,7 +53,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null,  string edit = null, string Done = null)
+        public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null, string edit = null, string Done = null)
         {
             if (Done != null)
             {

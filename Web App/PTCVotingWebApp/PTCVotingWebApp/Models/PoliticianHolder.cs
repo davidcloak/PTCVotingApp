@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PTCVotingWebApp.Models
 {
@@ -26,7 +23,7 @@ namespace PTCVotingWebApp.Models
         {
             List<Politcian> updatePoliticianList = new List<Politcian>();
 
-            foreach(var pol in politician)
+            foreach (var pol in politician)
             {
                 if (pol.name.Equals(oldName))
                 {
@@ -39,7 +36,7 @@ namespace PTCVotingWebApp.Models
             }
 
             politician = new List<Politcian>();
-            foreach(var pol in updatePoliticianList)
+            foreach (var pol in updatePoliticianList)
             {
                 politician.Add(pol);
             }

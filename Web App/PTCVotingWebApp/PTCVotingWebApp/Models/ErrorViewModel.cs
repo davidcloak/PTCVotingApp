@@ -1,5 +1,3 @@
-using System;
-
 namespace PTCVotingWebApp.Models
 {
     public class ErrorViewModel
