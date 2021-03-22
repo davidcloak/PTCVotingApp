@@ -20,6 +20,11 @@ namespace PTCVotingWebApp.Controllers
             return View();
         }
 
+        public IActionResult app()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

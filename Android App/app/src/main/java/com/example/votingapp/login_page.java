@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.votingapp.Connection.ConnectionClass;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -168,7 +167,7 @@ public class login_page extends AppCompatActivity implements GoogleApiClient.Con
         @Override
         protected String doInBackground(String... strings) {
 
-            con = connectionClass(ConnectionClass.user,ConnectionClass.pass,ConnectionClass.database,ConnectionClass.server);
+            con = connectionClass("Nate","Ghost123","voteShield","voteshield.database.windows.net");
             if(con == null){
                 runOnUiThread(new Runnable() {
                     @Override

@@ -19,8 +19,6 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 //SQL imports
-import com.example.votingapp.Connection.ConnectionClass;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -161,7 +159,7 @@ public class register_page extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try{
-                con = connectionClass(ConnectionClass.user,ConnectionClass.pass,ConnectionClass.database,ConnectionClass.server);
+                con = connectionClass("Nate","Ghost123","voteShield","voteshield.database.windows.net");
                 if(con == null){
                     message = "Connection Error";
                 }

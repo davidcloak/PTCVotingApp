@@ -1,8 +1,6 @@
 @{
     ViewData["Title"] = "App Page";
 }
- <link rel="stylesheet" href="~/css/site.css" />
- <img src="banner.png" alt="flagbanner" class="center">
 
 <div class="text-center">
     <h1 class="display-4">Use the app to lock in your vote!</h1>
@@ -11,7 +9,18 @@
         the shown app below.
     </p> 
     <br>
-    <p>App here</p>
+    <style>
+        #app{
+            background-color: black;
+            width: 200px;
+        }
+        #app:hover {
+            background-color: rgb(20, 20, 20);
+            width: 205px;
+        }
+    </style>
+    <a href="~/App/PTCvoting.apk">Trying to get it hosted on here</a><br />
+    <a href="https://davidcloak.github.io/PTCvoting.apk" download><img id="app" src="~/images/GetItOnAndroid.png" alt="Android App Download" title="Android App Download" style="border-radius: 0.25em;"/></a>
  
 
 </div>
