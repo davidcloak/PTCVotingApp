@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+//import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
+
 @RestController
 public class UserController {
     Tools t = new Tools();
@@ -118,7 +120,109 @@ public class UserController {
             return new ArrayList<VoteCount>();
         }
      }
+
+    private String getLocationID(String state, String city){
+        String id = "null";
+        String SQL = String.format("select * from location where state = '%s' and city = '%s'", state, city);
+
+        try{
+            Connection con = DriverManager.getConnection(connectionString);
+            Statement stmt = con.createStatement();
+            ResultSet result = stmt.executeQuery(SQL);
+
+            if(result.next()){
+                id = result.getInt("locationID") +"";
+            }
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+        return id;
+    }
  
+    @RequestMapping(value = "/deleteRace", method = RequestMethod.GET)
+    public String delteRace(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String state, @RequestParam(defaultValue = "*") String city, @RequestParam(defaultValue = "*") String name){
+        if(t.isUser(auth).getAccessLevel().equals("Good")){
+            String SQL = String.format("delete from race where locationID = '%s' and race = '%s'", getLocationID(state, city), name);
+            Connection con;
+            try {
+                con = DriverManager.getConnection(connectionString);
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate(SQL);
+                return "success";
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return "failed";
+        }else{
+            return "Not Authed";
+        }
+    }
+
+    @RequestMapping(value = "/getSRace", method = RequestMethod.GET)
+    public List<Races> GetRace(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String state, @RequestParam(defaultValue = "*") String city, @RequestParam(defaultValue = "*") String name){
+        if(t.isUser(auth).getAccessLevel().equals("Good")){
+            List<Races> response = new ArrayList<Races>();
+            Races aVoteCount = new Races();
+            String SQL = String.format("select race, locationID from race where locationID = '%s' and race = '%s' group by race, locationID", getLocationID(state, city), name);
+
+
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                Statement stmt = con.createStatement();
+                ResultSet result = stmt.executeQuery(SQL);
+
+                while (result.next()) {
+                    String race = result.getString("Race");
+                    String SQL2 = String.format("select * from race join Politcal on race.fk_politcal = Politcal.politcal where race = '%s'", race);
+
+                    Connection con2 = DriverManager.getConnection(connectionString);
+                    Statement stmt2 = con2.createStatement();
+                    ResultSet result2 = stmt2.executeQuery(SQL2);
+
+                    List<Pol> runners = new ArrayList<Pol>();
+                    while(result2.next()){
+                        Pol pol = new Pol();
+                        pol.setName(result2.getString("Name"));
+                        pol.setPoliticalParty(result2.getString("politicalParty"));
+                        pol.setDescription(result2.getString("description"));
+                        pol.setImageURL(result2.getString("imageURL"));
+                        runners.add(pol);
+                    }
+                    
+                    Races v = new Races();
+
+                    String SQL3 = String.format("select * from Location where locationID = '%s'", result.getInt("locationID")+"");
+
+                    Connection con3 = DriverManager.getConnection(connectionString);
+                    Statement stmt3 = con3.createStatement();
+                    ResultSet result3 = stmt3.executeQuery(SQL3);
+                    if(result3.next()){
+                        v.setState(result3.getString("state"));
+                        v.setCity(result3.getString("city"));
+                    }else{
+                        v.setState("Not Added Yet");
+                        v.setCity("Note Added Yet");
+                    }
+                    
+
+                    v.setRunners(runners);
+                    v.setRace(race);
+                    response.add(v);
+                }
+                con.close();
+            } catch (SQLException e) {
+                aVoteCount.setRace(e.getMessage());
+                response.add(aVoteCount);
+            }
+            
+            return response;
+        }else{
+            return new ArrayList<Races>();
+        }
+    }
+
       //Races list of people in the race
     @RequestMapping(value = "/getRaces", method = RequestMethod.GET)
     public List<Races> GetRaces(@RequestHeader("Authorization") String auth){

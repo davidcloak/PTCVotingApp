@@ -22,6 +22,45 @@ namespace PTCVotingWebApp.Controllers
         string username = "ShhhImASecret";
         string password = "ShhhImABiggerSecret123@";
 
+        public int deletePole(string race, string state, string city)
+        {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/deleteRace?state={state}&city={city}&name={race}";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+            Console.WriteLine(rawJSON);
+            return 1;
+        }
+
+        [HttpPost]
+        public IActionResult Poles(string race, string state, string city)
+        {
+            int i = deletePole(race, state, city);
+
+            //short delay for web service to catch Up??? Maybe delay needed though
+            Task t = Task.Run(() => {
+                Task.Delay(10000).Wait();
+                Console.WriteLine("Task ended delay...");
+            });
+
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = "https://ptcvotingapi.azurewebsites.net/getRaces";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+
+
+            rawJSON = "{ \"Holder\": " + rawJSON + "}";
+            PoleHolderModel poles = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON);
+            ViewBag.poles = poles.Holder.ToArray();
+            ViewData["test"] = rawJSON + " " + authInfo;
+            return View();
+        }
 
         public IActionResult Poles()
         {
@@ -34,15 +73,32 @@ namespace PTCVotingWebApp.Controllers
             string rawJSON = webClient.DownloadString(api);
 
 
-            /*var response = GetResponse(api);
-            string rawJSON = response.Content;*/
-
             rawJSON = "{ \"Holder\": " + rawJSON + "}";
             PoleHolderModel poles = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON);
             ViewBag.poles = poles.Holder.ToArray();
             ViewData["test"] = rawJSON + " " + authInfo;
             return View();
         }
+
+        [HttpPost]
+        public IActionResult EditPole(string race, string state, string city)
+        {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/getSRace?state={state}&city={city}&name={race}";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+
+            rawJSON = "{ \"Holder\": " + rawJSON + "}";
+            PoleHolderModel poles = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON);
+            
+            ViewBag.poles = poles.Holder.ToArray();
+            ViewData["test"] = rawJSON + " " + authInfo;
+            return View();
+        }
+
 
         public IActionResult FormCreate()
         {
@@ -52,6 +108,7 @@ namespace PTCVotingWebApp.Controllers
             return View();
         }
 
+        //TODO - redo this to match current data, do it in a function to be called also by the edit
         [HttpPost]
         public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null, string edit = null, string Done = null)
         {
@@ -130,14 +187,6 @@ namespace PTCVotingWebApp.Controllers
                 _context.Add(race);
                 await _context.SaveChangesAsync();
             }
-
-            /*Politcal politcal = new Politcal();
-            politcal.FkId = "0";
-            politcal.PoliticalParty = "Dem";
-            politcal.Name = "test tester";
-
-            _context.Add(politcal);
-            await _context.SaveChangesAsync();*/
         }
 
 
