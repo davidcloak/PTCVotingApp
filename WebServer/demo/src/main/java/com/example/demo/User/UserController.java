@@ -227,7 +227,7 @@ public class UserController {
     public String clearExtras(@RequestHeader("Authorization") String auth){
         if(t.isUser(auth).getAccessLevel().equals("Good")){
             try {
-                String SQL = "select * from Politcal where politcal not in (select fk_politcal from race)";
+                String SQL = "delete from Politcal where politcal in (select MAX(Politcal) from Politcal group by name having count(Name) > 1)";
                 Connection con = DriverManager.getConnection(connectionString);
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate(SQL);

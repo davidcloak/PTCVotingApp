@@ -38,7 +38,7 @@
             }
             else
             {
-                <div class="col-3 imageContainer" >
+                <div class="col-3 imageContainer">
                     <img class="vertical-center" src="@item.ImageUrl" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
                 </div>
             }
@@ -47,11 +47,14 @@
                 <h5>Party: @item.PoliticalParty</h5>
                 <p>@item.Description</p>
             </div>
-            <div class="col-2">
-                <a asp-action="Edit" asp-route-id="@item.Politcal1">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Politcal1">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Politcal1">Delete</a>
-            </div>
+            @if (User.IsInRole("Administrators"))
+            {
+                <div class="col-2">
+                    <a asp-action="Edit" asp-route-id="@item.Politcal1">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Politcal1">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Politcal1">Delete</a>
+                </div>
+            }
         </div>
     </div>
 }

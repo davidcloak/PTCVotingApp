@@ -4,29 +4,63 @@
 @{
     var data = ViewBag.poles;
 }
-@*<h1>@ViewData["test"]</h1>*@
+
+<script>
+    function buildRunners() {
+        var runners = "";
+        var names = document.getElementsByName("name[]");
+        var partys = document.getElementsByName("party[]");
+        var descriptions = document.getElementsByName("description[]");
+
+        for (var i = 0; i < names.length; i++) {
+            if (descriptions[i].value == "") {
+                runners += names[i].value + "~" + partys[i].value + "~NoDesc;";
+            } else {
+                runners += names[i].value + "~" + partys[i].value + "~" + descriptions[i].value + ";";
+            }
+        }
+        alert(runners);
+    }
+</script>
+
 @for (int i = 0; i < data.Length; i++)
 {
     var runners = data[i].Runners.ToArray();
-    <div style="border: 1px solid black; padding: 1em;" class="row">
-        <div class="col-10">
-            <h3>Race: @data[i].Race</h3>
-            <h4>Location: @data[i].State, @data[i].City</h4>
-            <h6>Runners: </h6>
 
+    <div class="container" style="margin-bottom: 1em;">
+        <form method="post" id="update">
+            <input id="runners" name="runners" value=""/>
+            <div class="row">
+                <div class="col-4"><label for="race">Race:</label><input name="race" value="@data[i].Race" style="width: 100%;" /></div>
+                <div class="col-4"><label for="state">State:</label><input name="state" value="@data[i].State" style="width: 100%;" /></div>
+                <div class="col-4"><label for="city">City:</label><input name="city" value="@data[i].City" style="width: 100%;" /></div>
+            </div>
+        </form>
+        <form>
             @for (int x = 0; x < runners.Length; x++)
             {
-                <p>@runners[x].Name, @runners[x].PoliticalParty</p>
+                <div style="border: 0.15em solid black; padding: 1em; margin-top: 1em;">
+                    <div class="row" style="margin-bottom: 1em;">
+                        <div class="col-6">
+                            <label for="name">Name:</label>
+                            <input id="@("name"+x)" name="name[]" value="@runners[x].Name" style="width: 100%;" />
+                        </div>
+                        <div class="col-6">
+                            <label for="party">Party:</label>
+                            <input id="@("party"+x)" name="party[]" value="@runners[x].PoliticalParty" style="width: 100%;" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="description">Description:</label>
+                            <textarea id="@("description"+x)" name="description[]" rows="8" style="width: 100%;">@runners[x].Description</textarea>
+                        </div>
+                    </div>
+                </div>
             }
-        </div>
-        <div class="col-2">
-            <form method="post">
-                <input type="hidden" name="race" value="@data[i].Race" />
-                <input type="hidden" name="state" value="@data[i].State" />
-                <input type="hidden" name="city" value="@data[i].City" />
-                <button type="submit">Edit</button>
-            </form>
-            <button>Delete</button>
-        </div>
+
+        </form>
     </div>
+    <a href="javascript:{}" onclick="buildRunners();">Save</a>
 }
+<div style="height: 3em;"></div>
