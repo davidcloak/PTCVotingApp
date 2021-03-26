@@ -223,6 +223,21 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/clearPol", method = RequestMethod.GET)
+    public String clearExtras(@RequestHeader("Authorization") String auth){
+        if(t.isUser(auth).getAccessLevel().equals("Good")){
+            try {
+                String SQL = "select * from Politcal where politcal not in (select fk_politcal from race)";
+                Connection con = DriverManager.getConnection(connectionString);
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate(SQL);
+            }catch(Exception e){
+                return e.getMessage();
+            }
+            return "success";
+        }
+        return "fail";
+    }
       //Races list of people in the race
     @RequestMapping(value = "/getRaces", method = RequestMethod.GET)
     public List<Races> GetRaces(@RequestHeader("Authorization") String auth){

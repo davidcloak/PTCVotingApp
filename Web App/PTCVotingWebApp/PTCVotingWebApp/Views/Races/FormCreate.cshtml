@@ -1,6 +1,68 @@
 ﻿@model PTCVotingWebApp.Models.Politcian
 @{
 }
+<style>
+    .conCenter {
+        position: fixed;
+        z-index: 999;
+    }
+
+    div.conCenter {
+        background-color: antiquewhite;
+        margin: 5px;
+        padding: 5px;
+        width: 65%;
+        height: 75%;
+        overflow: auto;
+        text-align: justify;
+        border: 0.15em solid black;
+    }
+</style>
+<script>
+    let place = '';
+
+    function picker(where) {
+        var conferm = document.getElementById("confermation");
+        conferm.style.visibility = 'visible';
+        place = where;
+    }
+
+    function RemoveCon(name, party, description) {
+        var conferm = document.getElementById("confermation");
+        conferm.style.visibility = 'hidden';
+        document.getElementById(place + "Name").value = name;
+        document.getElementById(place + "Party").value = party;
+        document.getElementById(place + "Des").value = description;
+    }
+</script>
+
+<div id="confermation" style="visibility: hidden;" class="conCenter">
+    @foreach (var item in ViewBag.pol)
+    {
+
+        <div class="container" href="javascript:{}" onclick="RemoveCon('@item.Name', '@item.PoliticalParty','@item.Description')" style="margin: 1em;">
+            <div class="row" style="border: 0.15em solid black; min-height: 17em;">
+                @if (item.ImageUrl == null)
+                {
+                    <div class="col-3 imageContainer">
+                        <img class="vertical-center" src="~/images/defaultUser.png" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-3 imageContainer">
+                        <img class="vertical-center" src="@item.ImageUrl" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
+                    </div>
+                }
+                <div class="col-7">
+                    <h4>@item.Name</h4>
+                    <h5>Party: @item.PoliticalParty</h5>
+                    <p>@item.Description</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 <h1>Form Creations</h1>
 <form method="post">
@@ -76,13 +138,14 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
-                                <input asp-for="name" value="" placeholder="Name" />
+                                <a href="javascript:{}" onclick="picker('place')">Add</a>
+                                <input id="placeName" asp-for="name" value="" placeholder="Name" />
                             </div>
                             <div class="row">
-                                <input asp-for="party" value="" placeholder="Party" />
+                                <input id="placeParty" asp-for="party" value="" placeholder="Party" />
                             </div>
                             <div class="row">
-                                <input asp-for="description" value="" placeholder="description" />
+                                <input id="placeDes" asp-for="description" value="" placeholder="description" />
                             </div>
                         </div>
                     </div>
@@ -95,3 +158,5 @@
     <button type="submit" name="Done" value="done">Finished</button>
 </form>
 
+
+<div style="height: 3em;"></div>

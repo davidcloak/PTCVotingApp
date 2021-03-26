@@ -99,9 +99,24 @@ namespace PTCVotingWebApp.Controllers
             return View();
         }
 
+        public void clearDups()
+        {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/clearPol";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+        }
 
         public IActionResult FormCreate()
         {
+            var searched = from b in _context.Politcal
+                           select b;
+
+            ViewBag.pol = searched.ToArray();
+
             PoliticianHolder.ClearPoliticians();
             ViewData["update"] = "false";
             ViewData["HasOnePol"] = "false";
@@ -110,8 +125,13 @@ namespace PTCVotingWebApp.Controllers
 
         //TODO - redo this to match current data, do it in a function to be called also by the edit
         [HttpPost]
-        public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null, string edit = null, string Done = null)
+        public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null, string edit = null, string Done = null, string searching = null)
         {
+            var searched = from b in _context.Politcal
+                           select b;
+
+            
+
             if (Done != null)
             {
                 if (ModelState.IsValid)
@@ -126,6 +146,9 @@ namespace PTCVotingWebApp.Controllers
                 PoliticianHolder.ClearPoliticians();
                 ViewData["update"] = "false";
                 ViewData["HasOnePol"] = "false";
+                ViewBag.pol = searched.ToArray();
+                clearDups();
+
             }
             else
             {
@@ -152,7 +175,12 @@ namespace PTCVotingWebApp.Controllers
                     ViewData["update"] = "false";
                 }
 
+                if(searching != null)
+                {
+                    searched = searched.Where(b => b.Name.Contains(searching));
+                }
 
+                ViewBag.pol = searched.ToArray();
                 ViewData["HasOnePol"] = "true";
                 ViewBag.PoliticianHolder = PoliticianHolder.ListPoliticians;
             }

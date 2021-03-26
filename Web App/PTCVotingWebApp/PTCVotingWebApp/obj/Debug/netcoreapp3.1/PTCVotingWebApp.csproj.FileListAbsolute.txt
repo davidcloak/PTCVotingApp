@@ -221,3 +221,13 @@ C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\ne
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\LoginWith2fa.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Races\EditPole.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUserRoles\Create.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUserRoles\Delete.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUserRoles\Details.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUserRoles\Edit.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetUserRoles\Index.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Create.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Delete.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Details.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Edit.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Index.cshtml.g.cs
