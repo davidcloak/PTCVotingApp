@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -13,5 +15,7 @@ namespace PTCVotingWebApp.Models
         public string FkId { get; set; }
         public string PoliticalParty { get; set; }
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
     }
 }

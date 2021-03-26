@@ -4,47 +4,57 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
- <img src="banner.png" alt="flagbanner" class="center">
+<style>
+    .imageContainer {
+        height: 17em;
+        position: relative;
+        border: 3px solid green;
+    }
+
+    .vertical-center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+</style>
 
 <h1>Index</h1>
-<br>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FkId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PoliticalParty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <br>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FkId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PoliticalParty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
+@*Default User Icon is 512 by 512*@
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="row" style="border: 0.15em solid black; min-height: 17em;">
+            @if (item.ImageUrl == null)
+            {
+                <div class="col-3 imageContainer">
+                    <img class="vertical-center" src="~/images/defaultUser.png" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
+                </div>
+            }
+            else
+            {
+                <div class="col-3 imageContainer" >
+                    <img class="vertical-center" src="@item.ImageUrl" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
+                </div>
+            }
+            <div class="col-7">
+                <h4>@item.Name</h4>
+                <h5>Party: @item.PoliticalParty</h5>
+                <p>@item.Description</p>
+            </div>
+            <div class="col-2">
                 <a asp-action="Edit" asp-route-id="@item.Politcal1">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Politcal1">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Politcal1">Delete</a>
-            </td>
-        </tr>
+            </div>
+        </div>
+    </div>
 }
-    </tbody>
-</table>
+
+@*Spacer for the footer*@
+<div style="height: 3em;"></div>

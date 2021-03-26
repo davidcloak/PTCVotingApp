@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -196,10 +198,19 @@ namespace PTCVotingWebApp.Models
 
                 entity.Property(e => e.Politcal1).HasColumnName("politcal");
 
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FkId)
                     .IsRequired()
                     .HasColumnName("fk_Id")
                     .HasMaxLength(450);
+
+                entity.Property(e => e.ImageUrl)
+                    .HasColumnName("imageURL")
+                    .HasMaxLength(450)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()

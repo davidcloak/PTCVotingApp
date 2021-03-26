@@ -4,7 +4,10 @@
 
 <h1>Form Creations</h1>
 <form method="post">
-    <input asp-for="title" placeholder="title" />
+    <input asp-for="title" placeholder="Title" />
+    <input asp-for="state" placeholder="State" />
+    <input asp-for="city" placeholder="City" />
+
     @if (ViewData["HasOnePol"].Equals("true"))
     {
         @foreach (var pol in ViewBag.PoliticianHolder)
@@ -17,19 +20,19 @@
                             <div class="row">
                                 <div class="col-10">
                                     <input asp-for="name" value="@pol.name" placeholder="People" />
-                                    @*<p>@pol.name</p>*@
                                 </div>
-                                @*<div class="col-2">
-                                        <button class="btn-primary" name="edit" value="@pol.name">Edit</button>
-                                    </div>*@
                             </div>
                             <div class="row">
                                 <div class="col-10">
                                     <input asp-for="party" value="@pol.party" placeholder="People" />
-                                    @*<p>@pol.party</p>*@
                                 </div>
                                 <div class="col-2">
                                     <button class="btn-primary" name="save" value="@pol.name">Save</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <input asp-for="description" value="@pol.description" placeholder="Description" />
                                 </div>
                             </div>
                         </div>
@@ -43,7 +46,6 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-10">
-                                    @*<input value="@pol.name" placeholder="People" />*@
                                     <p>@pol.name</p>
                                 </div>
                                 <div class="col-2">
@@ -52,12 +54,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-10">
-                                    @*<input value="@pol.party" placeholder="People" />*@
                                     <p>@pol.party</p>
                                 </div>
-                                @*<div class="col-2">
-                                        <button class="btn-primary" name="save" value="1">Save</button>
-                                    </div>*@
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <p>@pol.description</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,10 +81,10 @@
                             <div class="row">
                                 <input asp-for="party" value="" placeholder="Party" />
                             </div>
+                            <div class="row">
+                                <input asp-for="description" value="" placeholder="description" />
+                            </div>
                         </div>
-                        @*<div class="col-2">
-                                <button class="btn-primary">Edit</button>
-                            </div>*@
                     </div>
                 </div>
             </div>

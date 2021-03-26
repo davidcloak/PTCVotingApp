@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PTCVotingWebApp.Models;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PTCVotingWebApp.Models;
 
 namespace PTCVotingWebApp.Controllers
 {
@@ -50,7 +53,7 @@ namespace PTCVotingWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Politcal1,FkId,PoliticalParty,Name")] Politcal politcal)
+        public async Task<IActionResult> Create([Bind("Politcal1,FkId,PoliticalParty,Name,ImageUrl,Description")] Politcal politcal)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +85,7 @@ namespace PTCVotingWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Politcal1,FkId,PoliticalParty,Name")] Politcal politcal)
+        public async Task<IActionResult> Edit(int id, [Bind("Politcal1,FkId,PoliticalParty,Name,ImageUrl,Description")] Politcal politcal)
         {
             if (id != politcal.Politcal1)
             {

@@ -28,23 +28,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @*It is not needed in the nav but else where*@
-                        @*<li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="InfoForm">Info Form</a>
-                           </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="app">Get The App</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="AspNetUsers" asp-action="Index">Display Users</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Politcals" asp-action="Index">Politicians</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Races" asp-action="FormCreate">Form Creation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Races" asp-action="Poles">Display Forms</a>
-                        </li>
-                    </ul>
+                        @if (User.IsInRole("Administrators") && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="AspNetUsers" asp-action="Index">Display Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Races" asp-action="FormCreate">Form Creation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Races" asp-action="Poles">Display Forms</a>
+                            </li>
+                        }
+                        </ul>
                     <partial name="_LoginPartial" style="right: 0;"/>
                 </div>
             </div>

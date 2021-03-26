@@ -166,6 +166,7 @@ namespace PTCVotingWebApp.Controllers
             Politcal politcal = new Politcal();
             foreach (var pol in PoliticianHolder.ListPoliticians)
             {
+                int locationID = getLocationID(pol.state, pol.city);
                 title = pol.title;
                 race = new Race();
                 politcal = new Politcal();
@@ -173,6 +174,7 @@ namespace PTCVotingWebApp.Controllers
                 politcal.FkId = "0";
                 politcal.PoliticalParty = pol.party;
                 politcal.Name = pol.name;
+                politcal.Description = pol.description;
                 _context.Add(politcal);
                 await _context.SaveChangesAsync();
 
@@ -184,9 +186,15 @@ namespace PTCVotingWebApp.Controllers
 
                 race.Race1 = title;
                 race.FkPolitcal = array[0].Politcal1;
+                race.LocationId = locationID;
                 _context.Add(race);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public int getLocationID(string state, string city)
+        {
+            return 2;
         }
 
 
