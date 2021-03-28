@@ -28,21 +28,21 @@
 @*Default User Icon is 512 by 512*@
 @foreach (var item in Model)
 {
-    <div class="container">
+    <div class="container-fluid">
         <div class="row" style="border: 0.15em solid black; min-height: 17em;">
             @if (item.ImageUrl == null)
             {
-                <div class="col-3 imageContainer">
+                <div class="col-sm-3 imageContainer">
                     <img class="vertical-center" src="~/images/defaultUser.png" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
                 </div>
             }
             else
             {
-                <div class="col-3 imageContainer">
+                <div class="col-sm-3 imageContainer">
                     <img class="vertical-center" src="@item.ImageUrl" alt="@item.Name" title="@item.Name" style="width: 15em; height: 15em;" />
                 </div>
             }
-            <div class="col-7">
+            <div class="col-sm-7">
                 <h4>@item.Name</h4>
                 <h5>Party: @item.PoliticalParty</h5>
                 <p>@item.Description</p>

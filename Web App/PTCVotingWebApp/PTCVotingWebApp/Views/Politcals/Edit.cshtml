@@ -9,24 +9,24 @@
 
 <h4>Politcal</h4>
 <hr />
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Politcal1" />
+            
             <div class="form-group">
                 <label asp-for="FkId" class="control-label"></label>
-                <input asp-for="FkId" class="form-control" />
+                
                 <span asp-validation-for="FkId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PoliticalParty" class="control-label"></label>
-                <input asp-for="PoliticalParty" class="form-control" />
+                <input  class="form-control" />
                 <span asp-validation-for="PoliticalParty" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input  class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,16 +35,44 @@
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            
         </form>
     </div>
 </div>
+*@
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Politcal1" />
+    <input asp-for="FkId" class="form-control" type="hidden"/>
+    <div style="border: 0.15em solid black; padding: 1em; margin-top: 1em;">
+        <div class="row" style="margin-bottom: 1em;">
+            <div class="col-3">
+                <label for="name">Name:</label>
+                <input asp-for="Name" style="width: 100%;" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-3">
+                <label for="party">Party:</label>
+                <input asp-for="PoliticalParty" style="width: 100%;" />
+                <span asp-validation-for="PoliticalParty" class="text-danger"></span>
+            </div>
+            <div class="col-6">
+                <label for="party">Image URL:</label>
+                <input asp-for="ImageUrl" style="width: 100%;" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label>Description:</label>
+                <textarea asp-for="Description" rows="8" style="width: 100%;"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>

@@ -214,9 +214,6 @@ C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\ne
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\app.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Races\Poles.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
-C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.csproj.CoreCompileInputs.cache
-C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.MvcApplicationPartsAssemblyInfo.cs
-C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.MvcApplicationPartsAssemblyInfo.cache
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\RestSharp.dll
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\LoginWith2fa.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml.g.cs
@@ -231,3 +228,13 @@ C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\ne
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Details.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Edit.cshtml.g.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\AspNetRoles\Index.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.Extensions.Logging.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.Extensions.Logging.File.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.Formatting.Compact.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.Sinks.Async.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.csproj.CoreCompileInputs.cache
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.MvcApplicationPartsAssemblyInfo.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.MvcApplicationPartsAssemblyInfo.cache

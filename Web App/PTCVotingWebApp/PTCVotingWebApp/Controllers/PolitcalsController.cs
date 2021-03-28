@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,9 +19,27 @@ namespace PTCVotingWebApp.Controllers
             _context = context;
         }
 
+        public void clearDups()
+        {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/clearPol";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+        }
+
         // GET: Politcals
         public async Task<IActionResult> Index()
         {
+            clearDups();
+
+            Task t = Task.Run(() => {
+                Task.Delay(5000).Wait();
+                Console.WriteLine("Task ended delay...");
+            });
+
             return View(await _context.Politcal.ToListAsync());
         }
 
@@ -143,7 +162,8 @@ namespace PTCVotingWebApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        string username = "ShhhImASecret";
+        string password = "ShhhImABiggerSecret123@";
         private bool PolitcalExists(int id)
         {
             return _context.Politcal.Any(e => e.Politcal1 == id);

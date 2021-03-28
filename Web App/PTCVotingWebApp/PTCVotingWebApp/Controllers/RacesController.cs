@@ -80,9 +80,78 @@ namespace PTCVotingWebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult EditPole(string race, string state, string city)
+        private void parseRunners(string runners, string city, string state, string race)
         {
+            Politcian politician = new Politcian();
+
+            string[] runnersSplit = runners.Split(";");
+
+            for(int i = 0; i < runnersSplit.Length-1; i++)
+            {
+                string[] temp = runnersSplit[i].Split("~");
+                politician = new Politcian();
+                politician.city = city;
+                politician.state = state;
+                politician.title = race;
+                try
+                {
+                    politician.name = temp[0];
+                    politician.party = temp[1];
+                    if (temp[2].Equals("NoDesc"))
+                    {
+                        politician.description = "";
+                    }
+                    else
+                    {
+                        politician.description = temp[2];
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                PoliticianHolder.AddPolitician(politician);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPole(string race, string state, string city, string save = null, string runners = null)
+        {
+            clearDups();
+            Task t = Task.Run(() => {
+                Task.Delay(10000).Wait();
+                Console.WriteLine("Task ended delay...");
+            });
+
+            var searched = from b in _context.Politcal
+                           select b;
+
+            ViewBag.pol = searched.ToArray();
+
+            if (save != null)
+            {
+                if (save.Equals("Save"))
+                {
+                    int i = deletePole(race, state, city);
+                    parseRunners(runners, city, state, race);
+                    await AddToDbsAsync();
+                }
+
+                string authInfo1 = username + ":" + password;
+                authInfo1 = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo1));
+
+                string api1 = "https://ptcvotingapi.azurewebsites.net/getRaces";
+                var webClient1 = new WebClient();
+                webClient1.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo1);
+                string rawJSON1 = webClient1.DownloadString(api1);
+
+
+                rawJSON1 = "{ \"Holder\": " + rawJSON1 + "}";
+                PoleHolderModel poles1 = JsonConvert.DeserializeObject<PoleHolderModel>(rawJSON1);
+                ViewBag.poles = poles1.Holder.ToArray();
+                ViewData["test"] = rawJSON1 + " " + authInfo1;
+                return View("Poles");
+            }
             string authInfo = username + ":" + password;
             authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
 
@@ -112,6 +181,12 @@ namespace PTCVotingWebApp.Controllers
 
         public IActionResult FormCreate()
         {
+            clearDups();
+            Task t = Task.Run(() => {
+                Task.Delay(10000).Wait();
+                Console.WriteLine("Task ended delay...");
+            });
+
             var searched = from b in _context.Politcal
                            select b;
 
@@ -127,6 +202,12 @@ namespace PTCVotingWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null, string edit = null, string Done = null, string searching = null)
         {
+            clearDups();
+            Task t = Task.Run(() => {
+                Task.Delay(10000).Wait();
+                Console.WriteLine("Task ended delay...");
+            });
+
             var searched = from b in _context.Politcal
                            select b;
 
@@ -149,6 +230,10 @@ namespace PTCVotingWebApp.Controllers
                 ViewBag.pol = searched.ToArray();
                 clearDups();
 
+                Task c = Task.Run(() => {
+                    Task.Delay(5000).Wait();
+                    Console.WriteLine("Task ended delay...");
+                });
             }
             else
             {

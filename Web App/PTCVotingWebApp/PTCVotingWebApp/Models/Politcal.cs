@@ -12,8 +12,13 @@ namespace PTCVotingWebApp.Models
     {
         [Key]
         public int Politcal1 { get; set; }
+        [Required]
         public string FkId { get; set; }
+        [Required]
+        [MinLength(3, ErrorMessage = "Party has to 3 or more characters long.")]
         public string PoliticalParty { get; set; }
+        [Required]
+        [MinLength(3, ErrorMessage = "Name has to 3 or more characters long.")]
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
