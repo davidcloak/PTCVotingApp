@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PTCVotingWebApp.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace PTCVotingWebApp.Controllers
     public class RacesController : Controller
     {
         private readonly voteShieldContext _context;
-
+        string[] states = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" };
 
         public RacesController(voteShieldContext context)
         {
@@ -117,12 +118,6 @@ namespace PTCVotingWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPole(string race, string state, string city, string save = null, string runners = null)
         {
-            clearDups();
-            Task t = Task.Run(() => {
-                Task.Delay(10000).Wait();
-                Console.WriteLine("Task ended delay...");
-            });
-
             var searched = from b in _context.Politcal
                            select b;
 
@@ -135,6 +130,11 @@ namespace PTCVotingWebApp.Controllers
                     int i = deletePole(race, state, city);
                     parseRunners(runners, city, state, race);
                     await AddToDbsAsync();
+                    clearDups();
+                    Task b = Task.Run(() => {
+                        Task.Delay(5000).Wait();
+                        Console.WriteLine("Task ended delay...");
+                    });
                 }
 
                 string authInfo1 = username + ":" + password;
@@ -183,7 +183,7 @@ namespace PTCVotingWebApp.Controllers
         {
             clearDups();
             Task t = Task.Run(() => {
-                Task.Delay(10000).Wait();
+                Task.Delay(5000).Wait();
                 Console.WriteLine("Task ended delay...");
             });
 
@@ -191,84 +191,35 @@ namespace PTCVotingWebApp.Controllers
                            select b;
 
             ViewBag.pol = searched.ToArray();
+            ViewBag.states = states;
 
-            PoliticianHolder.ClearPoliticians();
-            ViewData["update"] = "false";
-            ViewData["HasOnePol"] = "false";
             return View();
         }
 
         //TODO - redo this to match current data, do it in a function to be called also by the edit
         [HttpPost]
-        public async Task<IActionResult> FormCreateAsync(Politcian politician, string save = null, string edit = null, string Done = null, string searching = null)
+        public async Task<IActionResult> FormCreateAsync(string race, string state, string city, string save = null, string runners = null)
         {
-            clearDups();
-            Task t = Task.Run(() => {
-                Task.Delay(10000).Wait();
-                Console.WriteLine("Task ended delay...");
-            });
-
             var searched = from b in _context.Politcal
                            select b;
 
-            
+            ViewBag.pol = searched.ToArray();
 
-            if (Done != null)
+            if (save != null)
             {
-                if (ModelState.IsValid)
+                if (save.Equals("Save"))
                 {
-                    PoliticianHolder.AddPolitician(politician);
+                    int i = deletePole(race, state, city);
+                    parseRunners(runners, city, state, race);
+                    await AddToDbsAsync();
+                    clearDups();
+                    Task b = Task.Run(() => {
+                        Task.Delay(5000).Wait();
+                        Console.WriteLine("Task ended delay...");
+                    });
                 }
-                //should find someway to tell them if it is wrong for now asume the last is right
-
-                //call function to add values to databse
-                await AddToDbsAsync();
-
-                PoliticianHolder.ClearPoliticians();
-                ViewData["update"] = "false";
-                ViewData["HasOnePol"] = "false";
-                ViewBag.pol = searched.ToArray();
-                clearDups();
-
-                Task c = Task.Run(() => {
-                    Task.Delay(5000).Wait();
-                    Console.WriteLine("Task ended delay...");
-                });
             }
-            else
-            {
-                ViewData["oldName"] = "";
-                if (save != null)
-                {
-                    PoliticianHolder.UpdatePoliticians(save, politician);
-                }
-                else
-                {
-                    if (ModelState.IsValid)
-                    {
-                        PoliticianHolder.AddPolitician(politician);
-                    }
-                }
-
-                if (edit != null)
-                {
-                    ViewData["update"] = "true";
-                    ViewData["oldName"] = edit;
-                }
-                else
-                {
-                    ViewData["update"] = "false";
-                }
-
-                if(searching != null)
-                {
-                    searched = searched.Where(b => b.Name.Contains(searching));
-                }
-
-                ViewBag.pol = searched.ToArray();
-                ViewData["HasOnePol"] = "true";
-                ViewBag.PoliticianHolder = PoliticianHolder.ListPoliticians;
-            }
+            ViewBag.states = states;
             return View();
         }
 
@@ -303,6 +254,7 @@ namespace PTCVotingWebApp.Controllers
                 _context.Add(race);
                 await _context.SaveChangesAsync();
             }
+            
         }
 
         public int getLocationID(string state, string city)

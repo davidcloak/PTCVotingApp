@@ -55,6 +55,9 @@ namespace PTCVotingWebApp.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
+            [Required]
+            public string captcha { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)

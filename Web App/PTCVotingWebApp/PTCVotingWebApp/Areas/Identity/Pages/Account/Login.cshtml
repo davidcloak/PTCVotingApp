@@ -5,6 +5,22 @@
     ViewData["Title"] = "Log in";
 }
 
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+</script>
+
+<script>
+    var onloadCallback = function () {
+        grecaptcha.render('divcaptch', {
+            'sitekey': '6Ley5ZIaAAAAAMnaa00t1JClt7p8an_k14wRFGdS',
+            'callback': function (response) {
+                alert('this was called');
+                $('#textcaptcha').val('t');
+            }
+        })
+    }
+</script>
+
 <h1>@ViewData["Title"] test</h1>
 <div class="row">
     <div class="col-md-4">
@@ -31,6 +47,12 @@
                         </label>
                     </div>
                 </div>
+
+                <div id="divcaptch"></div>
+                <input asp-for="Input.captcha" id="textcaptcha" type="text" style="display:none;" required />
+
+                <input type="submit" value="Test" />
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Log in</button>
                 </div>
@@ -76,6 +98,8 @@
         </section>
     </div>
 </div>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

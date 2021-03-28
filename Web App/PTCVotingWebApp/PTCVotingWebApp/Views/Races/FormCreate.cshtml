@@ -1,6 +1,8 @@
 ﻿@model PTCVotingWebApp.Models.Politcian
 @{
+    var data = ViewBag.poles;
 }
+
 <style>
     .conCenter {
         position: fixed;
@@ -18,29 +20,13 @@
         border: 0.15em solid black;
     }
 </style>
-<script>
-    let place = '';
 
-    function picker(where) {
-        var conferm = document.getElementById("confermation");
-        conferm.style.visibility = 'visible';
-        place = where;
-    }
-
-    function RemoveCon(name, party, description) {
-        var conferm = document.getElementById("confermation");
-        conferm.style.visibility = 'hidden';
-        document.getElementById(place + "Name").value = name;
-        document.getElementById(place + "Party").value = party;
-        document.getElementById(place + "Des").value = description;
-    }
-</script>
 
 <div id="confermation" style="visibility: hidden;" class="conCenter">
     @foreach (var item in ViewBag.pol)
     {
 
-        <div class="container" href="javascript:{}" onclick="RemoveCon('@item.Name', '@item.PoliticalParty','@item.Description')" style="margin: 1em;">
+        <div class="container" href="javascript:{}" onclick="send('@item.Name', '@item.PoliticalParty','@item.Description')" style="margin: 1em;">
             <div class="row" style="border: 0.15em solid black; min-height: 17em;">
                 @if (item.ImageUrl == null)
                 {
@@ -64,99 +50,60 @@
     }
 </div>
 
-<h1>Form Creations</h1>
-<form method="post">
-    <input asp-for="title" placeholder="Title" />
-    <input asp-for="state" placeholder="State" />
-    <input asp-for="city" placeholder="City" />
 
-    @if (ViewData["HasOnePol"].Equals("true"))
-    {
-        @foreach (var pol in ViewBag.PoliticianHolder)
-        {
-            if (ViewData["update"].Equals("true") && pol.name.Equals(ViewData["oldName"]))
-            {
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-10">
-                                    <input asp-for="name" value="@pol.name" placeholder="People" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-10">
-                                    <input asp-for="party" value="@pol.party" placeholder="People" />
-                                </div>
-                                <div class="col-2">
-                                    <button class="btn-primary" name="save" value="@pol.name">Save</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-10">
-                                    <input asp-for="description" value="@pol.description" placeholder="Description" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
+<div class="container" style="margin-bottom: 1em;">
+    <form method="post" id="update">
+        <input id="runners" name="runners" value="" hidden />
+        <input id="save" name="save" hidden />
+
+        <div class="row">
+            <div class="col-4"><label for="race">Race:</label><input name="race" value="" style="width: 100%; height: 2em;" /></div>
+            @*<div class="col-4"><label for="state">State:</label><input name="state" value="" style="width: 100%;" /></div>*@
+            <div class="col-4">
+                <label for="state">State:</label>
+                <select name="state"  style="width: 100%; height: 2em;">
+                    @foreach (var state in ViewBag.states)
+                    {
+                        <option value="@state">@state</option>
+                    }
+                </select>
+            </div>
+            <div class="col-4"><label for="city">City:</label><input name="city" value="" style="width: 100%; height: 2em;" /></div>
+        </div>
+    </form>
+    <form id="poli">
+        <div style="border: 0.15em solid black; padding: 1em; margin-top: 1em;" id="0Div">
+            <div class="row" style="margin-bottom: 1em;">
+                <div class="col-6">
+                    <label for="name">Name:</label>
+                    <input id="0Name" name="name[]" value="" style="width: 100%;" hidden />
+                    <p id="0NameB"></p>
                 </div>
-            }
-            else
-            {
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-10">
-                                    <p>@pol.name</p>
-                                </div>
-                                <div class="col-2">
-                                    <button class="btn-primary" name="edit" value="@pol.name">Edit</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-10">
-                                    <p>@pol.party</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-10">
-                                    <p>@pol.description</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    }
-    @if (ViewData["update"].Equals("false"))
-    {
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row">
-                                <a href="javascript:{}" onclick="picker('place')">Add</a>
-                                <input id="placeName" asp-for="name" value="" placeholder="Name" />
-                            </div>
-                            <div class="row">
-                                <input id="placeParty" asp-for="party" value="" placeholder="Party" />
-                            </div>
-                            <div class="row">
-                                <input id="placeDes" asp-for="description" value="" placeholder="description" />
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-6">
+                    <label for="party">Party:</label>
+                    <input id="0Party" name="party[]" value="" style="width: 100%;" hidden />
+                    <p id="0PartyB"></p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <label for="description">Description:</label>
+                    <textarea id="0Des" name="description[]" rows="8" style="width: 100%;" hidden></textarea>
+                    <p id="0DesB" style="min-height: 8em;"></p>
+
+                </div>
+            </div>
+            <a href="javascript:{}" onclick="picker('0');">Pick New Politician</a>
+            <a href="javascript:{}" onclick="remove('0Div');">Remove Politician</a>
         </div>
-    }
 
-    <button type="submit">Add</button>
-    <button type="submit" name="Done" value="done">Finished</button>
-</form>
+    </form>
+</div>
 
+<a href="javascript:{}" onclick="AddRunner();">Add Runner</a>
+<a href="javascript:{}" onclick="buildRunners();">Save</a>
+<a href="javascript:{}" onclick="cancel();">Cancel</a>
 
 <div style="height: 3em;"></div>
