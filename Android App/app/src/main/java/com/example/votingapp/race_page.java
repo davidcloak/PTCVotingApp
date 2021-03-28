@@ -46,6 +46,8 @@ public class race_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_race_page);
 
+        this.setTitle("Choose The Race to Vote");
+
         raceButton0 = findViewById(R.id.race0Button);
         raceButton1 = findViewById(R.id.race1Button);
         raceButton2 = findViewById(R.id.race2Button);
@@ -57,7 +59,7 @@ public class race_page extends AppCompatActivity {
         raceButton0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                apiConnect();
+                apiConnect0();
             }
         });
 
@@ -66,8 +68,7 @@ public class race_page extends AppCompatActivity {
         raceButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(race_page.this, vote_page.class);
-                startActivity(intent);
+                apiConnect1();
             }
         });
 
@@ -76,8 +77,7 @@ public class race_page extends AppCompatActivity {
         raceButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(race_page.this, president_page.class);
-                startActivity(intent);
+                apiConnect2();
             }
         });
 
@@ -86,8 +86,7 @@ public class race_page extends AppCompatActivity {
         raceButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(race_page.this, vote_page.class);
-                startActivity(intent);
+                //Need function
             }
         });
 
@@ -96,8 +95,7 @@ public class race_page extends AppCompatActivity {
         raceButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(race_page.this, vote_page.class);
-                startActivity(intent);
+                //Need function
             }
         });
     }
@@ -110,55 +108,98 @@ public class race_page extends AppCompatActivity {
         return authHeader;
     }
 
-    public void apiConnect() {
+    //First button function
+    public void apiConnect0() {
         RequestQueue queue = Volley.newRequestQueue(race_page.this);
         String url = "https://ptcvotingapi.azurewebsites.net/getRaces";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if (!response.equals(null)) {
-
                     //Variables for holders
                     String d1 = "";
                     String c1 = "";
                     String p1 = "";
+                    String i1 = "";
+
                     String d2 = "";
                     String c2 = "";
                     String p2 = "";
+                    String i2 = "";
+
+                    String d3 = "";
+                    String c3 = "";
+                    String p3 = "";
+                    String i3 = "";
 
                     try {
                         JSONObject first = response.getJSONObject(0);
                         JSONArray runners = first.getJSONArray("runners");
 
-                        //Party
-                        JSONObject party1 = runners.getJSONObject(0);
-                        p1 = party1.getString("politicalParty");
-                        JSONObject party2 = runners.getJSONObject(1);
-                        p2 = party2.getString("politicalParty");
+                        //For loop get all runners info. But I can't pull each one info.
+//                        for (int i = 0; i < runners.length(); i++) {
+//
+//                            JSONObject runner = runners.getJSONObject(i);
+//
+//                            String politicalParty = runner.getString("politicalParty");
+//                            String imageURL = runner.getString("imageURL");
+//                            String description = runner.getString("description");
+//                            String name = runner.getString("name");
+//
+//                            Log.e("All results: ", politicalParty + imageURL + description + name);
+//                          }
 
-                        //Description
-                        JSONObject description1 = runners.getJSONObject(0);
-                        d1 = description1.getString("description");
-                        JSONObject description2 = runners.getJSONObject(1);
-                        d2 = description2.getString("description");
+                            //Party
+                            JSONObject party1 = runners.getJSONObject(0);
+                            p1 = party1.getString("politicalParty");
+                            JSONObject party2 = runners.getJSONObject(1);
+                            p2 = party2.getString("politicalParty");
+                            JSONObject party3 = runners.getJSONObject(2);
+                            p3 = party3.getString("politicalParty");
 
-                        //Name
-                        JSONObject name1 = runners.getJSONObject(0);
-                        c1 = name1.getString("name");
-                        JSONObject name2 = runners.getJSONObject(1);
-                        c2 = name2.getString("name");
+                            //Image
+                            JSONObject image1 = runners.getJSONObject(0);
+                            i1 = image1.getString("imageURL");
+                            JSONObject image2 = runners.getJSONObject(1);
+                            i2 = image2.getString("imageURL");
+                            JSONObject image3 = runners.getJSONObject(2);
+                            i3 = image3.getString("imageURL");
+
+                            //Description
+                            JSONObject description1 = runners.getJSONObject(0);
+                            d1 = description1.getString("description");
+                            JSONObject description2 = runners.getJSONObject(1);
+                            d2 = description2.getString("description");
+                            JSONObject description3 = runners.getJSONObject(2);
+                            d3 = description3.getString("description");
+
+                            //Name
+                            JSONObject name1 = runners.getJSONObject(0);
+                            c1 = name1.getString("name");
+                            JSONObject name2 = runners.getJSONObject(1);
+                            c2 = name2.getString("name");
+                            JSONObject name3 = runners.getJSONObject(2);
+                            c3 = name3.getString("name");
+
+
+                        Intent intent = new Intent(race_page.this, vote_page.class);
+                        intent.putExtra("d1", d1);
+                        intent.putExtra("c1", c1);
+                        intent.putExtra("i1", i1);
+                        intent.putExtra("p1", p1);
+                        intent.putExtra("d2", d2);
+                        intent.putExtra("i2", i2);
+                        intent.putExtra("c2", c2);
+                        intent.putExtra("p2", p2);
+                        intent.putExtra("d3", d3);
+                        intent.putExtra("i3", i3);
+                        intent.putExtra("c3", c3);
+                        intent.putExtra("p3", p3);
+                        startActivity(intent);
 
                     } catch (JSONException e) {
                         Log.e("Json object error: ", e.toString());
                     }
-                    Intent intent = new Intent(race_page.this, vote_page.class);
-                    intent.putExtra("d1", d1);
-                    intent.putExtra("c1", c1);
-                    intent.putExtra("p1", p1);
-                    intent.putExtra("d2", d2);
-                    intent.putExtra("c2", c2);
-                    intent.putExtra("p2", p2);
-                    startActivity(intent);
 
                 } else {
                     Log.e("Your Array Response", "Data Null");
@@ -196,71 +237,237 @@ public class race_page extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
-//    public void apiConnect() {
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://ptcvotingapi.azurewebsites.net/getRaces", new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                if (!response.equals(null)) {
-//                    response = "{ \"runners\": " + response + "}";
-//                    Log.e("Your Array Response", response);
-//                    JSONtoClassRace(response);
-//
-//                    //Get race from API
-//                    String politicalParty1 = polInfo.getPoliticalParty();
-//                    String imageURL1 = polInfo.getImageURL();
-//                    String description1 = polInfo.getDescription();
-//                    String name1 = polInfo.getName();
-//
-//                    String politicalParty2 = polInfo.getPoliticalParty();
-//                    String imageURL2 = polInfo.getImageURL();
-//                    String description2 = polInfo.getDescription();
-//                    String name2 = polInfo.getName();
-//
-//                    //Open race page and put race name in the button
-//                    Intent intent = new Intent(race_page.this, vote_page.class);
-//                    intent.putExtra("race0", race0);
-//                    intent.putExtra("race1", race1);
-//                    intent.putExtra("race2", race2);
-//                    intent.putExtra("race3", race3);
-//                    intent.putExtra("race4", race4);
-//                    startActivity(intent);
-//
-//                    //Log.e("called converter", races.getRaces().get(0).getRace());
-//                } else {
-//                    Log.e("Your Array Response", "Data Null");
-//                }
-//            }
-//
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.e("error is ", "" + error);
-//            }
-//        }) {
-//
-//            //This is for Headers If You Needed
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Log.e("getHeaders", "Called :)");
-//                String auth = buildAuth("ShhhImASecret", "ShhhImABiggerSecret123@");
-//                HashMap<String, String> headers = new HashMap<>();
-//                headers.put(HttpHeaders.AUTHORIZATION, auth);
-//                return headers;
-//            }
-//
-//            //Pass Your Parameters here
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<String, String>();
-//                //No Parameters for this one..
-//                return params;
-//            }
-//        };
-//        request.setRetryPolicy(new DefaultRetryPolicy(
-//                10000,
-//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//        queue.add(request);
-//    }
+
+    //Second button function
+    public void apiConnect1() {
+        RequestQueue queue = Volley.newRequestQueue(race_page.this);
+        String url = "https://ptcvotingapi.azurewebsites.net/getRaces";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (!response.equals(null)) {
+                    //Variables for holders
+                    String d1 = "";
+                    String c1 = "";
+                    String p1 = "";
+                    String i1 = "";
+
+                    String d2 = "";
+                    String c2 = "";
+                    String p2 = "";
+                    String i2 = "";
+
+                    String d3 = "";
+                    String c3 = "";
+                    String p3 = "";
+                    String i3 = "";
+
+                    String d4 = "";
+                    String c4 = "";
+                    String p4 = "";
+                    String i4 = "";
+
+                    try {
+                        JSONObject first = response.getJSONObject(1);
+                        JSONArray runners = first.getJSONArray("runners");
+
+                        //Party
+                        JSONObject party1 = runners.getJSONObject(0);
+                        p1 = party1.getString("politicalParty");
+                        JSONObject party2 = runners.getJSONObject(1);
+                        p2 = party2.getString("politicalParty");
+                        JSONObject party3 = runners.getJSONObject(2);
+                        p3 = party3.getString("politicalParty");
+
+                        //Description
+                        JSONObject description1 = runners.getJSONObject(0);
+                        d1 = description1.getString("description");
+                        JSONObject description2 = runners.getJSONObject(1);
+                        d2 = description2.getString("description");
+                        JSONObject description3 = runners.getJSONObject(2);
+                        d3 = description3.getString("description");
+
+                        //Name
+                        JSONObject name1 = runners.getJSONObject(0);
+                        c1 = name1.getString("name");
+                        JSONObject name2 = runners.getJSONObject(1);
+                        c2 = name2.getString("name");
+                        JSONObject name3 = runners.getJSONObject(2);
+                        c3 = name3.getString("name");
+
+                        //Image
+                        JSONObject image1 = runners.getJSONObject(0);
+                        i1 = image1.getString("imageURL");
+                        JSONObject image2 = runners.getJSONObject(1);
+                        i2 = image2.getString("imageURL");
+                        JSONObject image3 = runners.getJSONObject(2);
+                        i3 = image3.getString("imageURL");
+
+                        Intent intent = new Intent(race_page.this, vote_page.class);
+                        intent.putExtra("d1", d1);
+                        intent.putExtra("c1", c1);
+                        intent.putExtra("p1", p1);
+                        intent.putExtra("i1", i1);
+
+                        intent.putExtra("d2", d2);
+                        intent.putExtra("c2", c2);
+                        intent.putExtra("p2", p2);
+                        intent.putExtra("i2", i2);
+
+                        intent.putExtra("d3", d3);
+                        intent.putExtra("c3", c3);
+                        intent.putExtra("p3", p3);
+                        intent.putExtra("i3", i3);
+
+                        startActivity(intent);
+
+                    } catch (JSONException e) {
+                        Log.e("Json object error: ", e.toString());
+                    }
+
+                } else {
+                    Log.e("Your Array Response", "Data Null");
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error is ", "" + error);
+            }
+        }) {
+
+            //This is for Headers If You Needed
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Log.e("getHeaders", "Called :)");
+                String auth = buildAuth("ShhhImASecret", "ShhhImABiggerSecret123@");
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put(HttpHeaders.AUTHORIZATION, auth);
+                return headers;
+            }
+
+            //Pass Your Parameters here
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //No Parameters for this one..
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
+    //Third button function
+    public void apiConnect2() {
+        RequestQueue queue = Volley.newRequestQueue(race_page.this);
+        String url = "https://ptcvotingapi.azurewebsites.net/getRaces";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (!response.equals(null)) {
+                    //Variables for holders
+                    String d1 = "";
+                    String c1 = "";
+                    String p1 = "";
+                    String i1 = "";
+
+                    String d2 = "";
+                    String c2 = "";
+                    String p2 = "";
+                    String i2 = "";
+
+                    String d3 = "";
+                    String c3 = "";
+                    String p3 = "";
+                    String d4 = "";
+                    String c4 = "";
+                    String p4 = "";
+
+                    try {
+                        JSONObject first = response.getJSONObject(2);
+                        JSONArray runners = first.getJSONArray("runners");
+
+                        //Party
+                        JSONObject party1 = runners.getJSONObject(0);
+                        p1 = party1.getString("politicalParty");
+                        JSONObject party2 = runners.getJSONObject(1);
+                        p2 = party2.getString("politicalParty");
+
+                        //Description
+                        JSONObject description1 = runners.getJSONObject(0);
+                        d1 = description1.getString("description");
+                        JSONObject description2 = runners.getJSONObject(1);
+                        d2 = description2.getString("description");
+
+                        //Name
+                        JSONObject name1 = runners.getJSONObject(0);
+                        c1 = name1.getString("name");
+                        JSONObject name2 = runners.getJSONObject(1);
+                        c2 = name2.getString("name");
+
+                        //Image
+                        JSONObject image1 = runners.getJSONObject(0);
+                        i1 = image1.getString("imageURL");
+                        JSONObject image2 = runners.getJSONObject(1);
+                        i2 = image2.getString("imageURL");
+
+                        Intent intent = new Intent(race_page.this, vote_page.class);
+                        intent.putExtra("d1", d1);
+                        intent.putExtra("c1", c1);
+                        intent.putExtra("p1", p1);
+                        intent.putExtra("i1", i1);
+
+                        intent.putExtra("d2", d2);
+                        intent.putExtra("c2", c2);
+                        intent.putExtra("p2", p2);
+                        intent.putExtra("i2", i2);
+
+                        startActivity(intent);
+
+                    } catch (JSONException e) {
+                        Log.e("Json object error: ", e.toString());
+                    }
+
+                } else {
+                    Log.e("Your Array Response", "Data Null");
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error is ", "" + error);
+            }
+        }) {
+
+            //This is for Headers If You Needed
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Log.e("getHeaders", "Called :)");
+                String auth = buildAuth("ShhhImASecret", "ShhhImABiggerSecret123@");
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put(HttpHeaders.AUTHORIZATION, auth);
+                return headers;
+            }
+
+            //Pass Your Parameters here
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //No Parameters for this one..
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
 }
