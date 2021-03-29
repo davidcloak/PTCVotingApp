@@ -86,8 +86,9 @@ namespace PTCVotingWebApp.Controllers
             Politcian politician = new Politcian();
 
             string[] runnersSplit = runners.Split(";");
+            PoliticianHolder.ClearPoliticians();
 
-            for(int i = 0; i < runnersSplit.Length-1; i++)
+            for (int i = 0; i < runnersSplit.Length-1; i++)
             {
                 string[] temp = runnersSplit[i].Split("~");
                 politician = new Politcian();

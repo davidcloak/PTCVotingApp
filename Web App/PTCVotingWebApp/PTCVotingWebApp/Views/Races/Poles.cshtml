@@ -69,7 +69,7 @@
                 <input type="hidden" name="city" value="@data[i].City" />
                 <a href="javascript:{}" onclick="document.getElementById('@("edit"+data[i].Race)').submit();">Edit</a>
             </form>
-            <form method="post" id="@("delete"+data[i].Race)">
+            <form method="post" id="@("delete"+data[i].Race)" action="/Races/Poles">
                 <input type="hidden" name="race" value="@data[i].Race" />
                 <input type="hidden" name="state" value="@data[i].State" />
                 <input type="hidden" name="city" value="@data[i].City" />
