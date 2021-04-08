@@ -23,7 +23,24 @@ namespace PTCVotingWebApp.Controllers
         string username = "ShhhImASecret";
         string password = "ShhhImABiggerSecret123@";
 
-        public int deletePole(string race, string state, string city)
+        [HttpPost]
+        public IActionResult Results(string race, string state, string city)
+        {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = "https://ptcvotingapi.azurewebsites.net/getVoteCount/?race={race}&state={state}&city={city}";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+            rawJSON = "{ \"results\": " + rawJSON + "}";
+            Console.WriteLine(rawJSON);
+            ResultsHolder results = JsonConvert.DeserializeObject<ResultsHolder>(rawJSON);
+            ViewBag.results = results.Results.ToArray();
+
+            return View();
+        }
+            public int deletePole(string race, string state, string city)
         {
             string authInfo = username + ":" + password;
             authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));

@@ -75,6 +75,12 @@
                 <input type="hidden" name="city" value="@data[i].City" />
                 <a href="javascript:{}" onclick="confermBuild('@data[i].Race');">Delete</a>
             </form>
+            @*<form method="post" id="@("results"+data[i].Race)" action="/Races/Results">
+                <input type="hidden" name="race" value="@data[i].Race" />
+                <input type="hidden" name="state" value="@data[i].State" />
+                <input type="hidden" name="city" value="@data[i].City" />
+                <a href="javascript:{}" onclick="document.getElementById('@("results"+data[i].Race)').submit();">View Results</a>
+            </form>*@
         </div>
     </div>
 }

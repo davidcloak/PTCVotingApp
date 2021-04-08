@@ -67,6 +67,22 @@ public class UserController {
     //     return Arrays.equals(buffer3, buffer4);
     // }
 
+    @RequestMapping(value = "/getVotedRaces", method = RequestMethod.GET)
+    public List<String> getVotedRaces() {
+        List<String> results = new ArrayList<String>();
+        String SQL = String.format("select fk_race from voting group by fk_race");
+        try {
+            Connection con = DriverManager.getConnection(connectionString);
+            Statement stmt = con.createStatement();
+            ResultSet result = stmt.executeQuery(SQL);
+            while(result.next()){
+                results.add(result.getString("fk_race"));
+            }
+        }catch (SQLException e) {
+        }
+        return results;
+    }
+
     @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     public List<User> GetUser(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String email) {
         if(t.isUser(auth).getAccessLevel().equals("Good")){
@@ -390,7 +406,8 @@ public class UserController {
 
                 while (result.next()) {
                     String race = result.getString("Race");
-                    String SQL2 = String.format("select * from race join Politcal on race.fk_politcal = Politcal.politcal where race = '%s'", race);
+                    String location = result.getInt("locationID")+"";
+                    String SQL2 = String.format("select * from race join Politcal on race.fk_politcal = Politcal.politcal where race = '%s' and locationID = '%s'", race, location);
 
                     Connection con2 = DriverManager.getConnection(connectionString);
                     Statement stmt2 = con2.createStatement();

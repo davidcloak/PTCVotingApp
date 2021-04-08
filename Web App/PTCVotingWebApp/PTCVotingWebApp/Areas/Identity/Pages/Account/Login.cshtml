@@ -14,7 +14,7 @@
         grecaptcha.render('divcaptch', {
             'sitekey': '6Ley5ZIaAAAAAMnaa00t1JClt7p8an_k14wRFGdS',
             'callback': function (response) {
-                alert('this was called');
+                //alert('this was called');
                 $('#textcaptcha').val('t');
             }
         })
@@ -51,7 +51,7 @@
                 <div id="divcaptch"></div>
                 <input asp-for="Input.captcha" id="textcaptcha" type="text" style="display:none;" required />
 
-                <input type="submit" value="Test" />
+               @* <input type="submit" value="Test" />*@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Log in</button>

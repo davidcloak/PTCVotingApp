@@ -30,6 +30,7 @@ namespace PTCVotingWebApp.Models
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Politcal> Politcal { get; set; }
         public virtual DbSet<Race> Race { get; set; }
+        public virtual DbSet<UserVotes> UserVotes { get; set; }
         public virtual DbSet<Voting> Voting { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -244,6 +245,23 @@ namespace PTCVotingWebApp.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<UserVotes>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnName("userID")
+                    .HasMaxLength(450)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.VotingId).HasColumnName("votingID");
+            });
+
             modelBuilder.Entity<Voting>(entity =>
             {
                 entity.HasKey(e => e.Voting1)
@@ -263,6 +281,8 @@ namespace PTCVotingWebApp.Models
                     .HasColumnName("fk_race")
                     .HasMaxLength(150)
                     .IsUnicode(false);
+
+                entity.Property(e => e.LocationId).HasColumnName("locationID");
             });
 
             OnModelCreatingPartial(modelBuilder);

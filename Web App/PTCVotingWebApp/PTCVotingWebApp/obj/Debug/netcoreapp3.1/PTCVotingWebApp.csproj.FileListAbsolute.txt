@@ -238,3 +238,9 @@ C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\bin\Debug\ne
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.csproj.CoreCompileInputs.cache
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.MvcApplicationPartsAssemblyInfo.cs
 C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\PTCVotingWebApp.MvcApplicationPartsAssemblyInfo.cache
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Races\Results.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Votings\Create.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Votings\Delete.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Votings\Details.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Votings\Edit.cshtml.g.cs
+C:\!Enterprise\PTCVotingApp\Web App\PTCVotingWebApp\PTCVotingWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Votings\Index.cshtml.g.cs
