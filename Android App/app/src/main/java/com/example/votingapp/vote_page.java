@@ -8,172 +8,100 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.votingapp.RacesHolders.Pol;
+import com.example.votingapp.RacesHolders.Races;
+import com.example.votingapp.RacesHolders.RacesHolder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpHeaders;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 public class vote_page extends AppCompatActivity {
 
-    ImageView image0, image1, image2, image3;
-    TextView name0, name1, name2, name3;
-    TextView party0, party1, party2, party3;
-    TextView des0, des1, des2, des3;
-    CardView card1, card2, card3, card4;
+    //static public RacesHolder races = new RacesHolder();
+    static public ArrayList<Races> raceList = new ArrayList<Races>();
+    ListView listView;
+    int p;
+    int position;
+    String dID;
+    TextView PartyTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_page);
-
         this.setTitle("Vote");
 
-        //First runner info
-        name0 = findViewById(R.id.name0);
-        String c1 = getIntent().getStringExtra("c1");
-        name0.setText(c1);
+        //clears in case of double call
+        raceList = new ArrayList<Races>();
 
-        party0 = findViewById(R.id.party0);
-        String p1 = getIntent().getStringExtra("p1");
-        party0.setText(p1);
+        //races = race_page.races;
+        raceList = race_page.raceList;
+        listView = findViewById(R.id.listView);
 
-        des0 = findViewById(R.id.des0);
-        String d1 = getIntent().getStringExtra("d1");
-        des0.setText(d1);
-        card1 = findViewById(R.id.card1);
-        card1.setOnClickListener(new View.OnClickListener(){
+        getUserID(Information_page.username);
+
+        //BuildRunners();
+        position = getIntent().getIntExtra("pos", 0);
+        Log.e("raceList", "test" + raceList.get(position).getRunners().toString());
+
+        PartyTitle = findViewById(R.id.RaceName);
+        PartyTitle.setText(raceList.get(position).getRace());
+
+        RunnerListAdapter adapter = new RunnerListAdapter(this, R.layout.runner_adapter_view, (List<Pol>) raceList.get(position).getRunners());
+        listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Toast.makeText(vote_page.this, i+"~ Voted for: "+raceList.get(position).getRunners().get(i).getName(), Toast.LENGTH_SHORT).show();
+                p = i;
                 openDialog();
             }
         });
-
-        //Second runner info
-        name1 = findViewById(R.id.name1);
-        String c2 = getIntent().getStringExtra("c2");
-        name1.setText(c2);
-
-        party1 = findViewById(R.id.party1);
-        String p2 = getIntent().getStringExtra("p2");
-        party1.setText(p2);
-
-        des1 = findViewById(R.id.des1);
-        String d2 = getIntent().getStringExtra("d2");
-        des1.setText(d2);
-
-        card2 = findViewById(R.id.card2);
-        card2.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openDialog();
-            }
-        });
-        //If don't have this user info then card inVisibility
-        if(c2 == null || p2 == null || d2 == null){
-            card2.setVisibility(View.GONE);
-        }
-
-        //Third runner info
-        name2 = findViewById(R.id.name2);
-        String c3 = getIntent().getStringExtra("c3");
-        name2.setText(c3);
-
-        party2 = findViewById(R.id.party2);
-        String p3 = getIntent().getStringExtra("p3");
-        party2.setText(p3);
-
-        des2 = findViewById(R.id.des2);
-        String d3 = getIntent().getStringExtra("d3");
-        des2.setText(d3);
-
-        card3 = findViewById(R.id.card3);
-        card3.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openDialog();
-            }
-        });
-        //If don't have this user info then card inVisibility
-        if(c3 == null || p3 == null || d3 == null){
-            card3.setVisibility(View.GONE);
-        }
-
-        //Fourth runner info
-        name3 = findViewById(R.id.name3);
-        String c4 = getIntent().getStringExtra("c4");
-        name3.setText(c4);
-
-        party3 = findViewById(R.id.party3);
-        String p4 = getIntent().getStringExtra("p4");
-        party3.setText(p4);
-
-        des3 = findViewById(R.id.des3);
-        String d4 = getIntent().getStringExtra("d4");
-        des3.setText(d4);
-
-        card4 = findViewById(R.id.card4);
-        card4.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openDialog();
-            }
-        });
-        //If don't have this user info then card inVisibility
-        if(c4 == null || p4 == null || d4 == null){
-            card4.setVisibility(View.GONE);
-        }
-
-
-        image0 = findViewById(R.id.image0);
-        image1 = findViewById(R.id.image1);
-        image2 = findViewById(R.id.image2);
-        image3 = findViewById(R.id.image3);
-
-        //URL from API
-        String i1 = getIntent().getStringExtra("i1");
-        String i2 = getIntent().getStringExtra("i2");
-        String i3 = getIntent().getStringExtra("i3");
-        String i4 = getIntent().getStringExtra("i4");
-
-        //Load image
-        Picasso.get()
-                .load(i1)
-                //.resize(350, 350)
-                .into(image0);
-
-        Picasso.get()
-                .load(i2)
-                //.resize(350, 350)
-                .into(image1);
-
-        Picasso.get()
-                .load(i3)
-                //.resize(350, 350)
-                .into(image2);
-
-        Picasso.get()
-                .load(i4)
-                //.resize(350, 350)
-                .into(image3);
-
     }
 
     //If click the card, then confirm windows shows up
-    public void openDialog(){
+    private void openDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(vote_page.this);
         //Show confirmation alert
-        builder.setMessage("Please confirm your choice!");
+        builder.setMessage(String.format("You want to vote for %s correct?",raceList.get(position).getRunners().get(p).getName()));
         builder.setCancelable(true);
         builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             //Click Yes show poll page results
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(vote_page.this, poll_page.class);
-                startActivity(intent);
+                //Toast.makeText(vote_page.this, dID+"~ Voted for: "+raceList.get(position).getRunners().get(p).getName(), Toast.LENGTH_SHORT).show();
+                apiConnect(raceList.get(position).getRunners().get(p).getName(), dID, raceList.get(position).getRace(), raceList.get(position).getState(), raceList.get(position).getCity());
+                Log.e("test",raceList.get(position).getRace()+" "+ raceList.get(position).getState()+" "+ raceList.get(position).getCity());
             }
         });
         builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
@@ -184,5 +112,128 @@ public class vote_page extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+
+    //Builds the Auth header for the API
+    public static String buildAuth(String username, String password) {
+        String temp = username + ":" + password;
+        byte[] encoded = Base64.encodeBase64(temp.getBytes(Charset.forName("US-ASCII")));
+        String authHeader = "Basic " + new String(encoded);
+        return authHeader;
+    }
+    //USerID
+    private void getUserID(String email){
+        StringRequest request = new StringRequest(Request.Method.POST, "https://ptcvotingapi.azurewebsites.net/getUser", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (!response.equals(null)) {
+                    response = response.replace("[","");
+                    response = response.replace("]","");
+
+                    try {
+                        //reads what was gathured
+                        ObjectMapper mapper = new ObjectMapper();
+                        Log.e("response:", response);
+                        User temp = mapper.readValue(response, User.class);
+                        dID = temp.getId()+"";
+                    } catch (Exception ex) {
+                        Log.e("Error", ex.toString());
+                    }
+                    //Log.e("called converter", races.getRaces().get(0).getRace());
+                } else {
+                    Log.e("Your Array Response", "Data Null");
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error is ", "" + error);
+            }
+        }) {
+
+            //This is for Headers If You Needed
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Log.e("getHeaders", "Called :)");
+                String auth = buildAuth("ShhhImASecret", "ShhhImABiggerSecret123@");
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put(HttpHeaders.AUTHORIZATION, auth);
+                return headers;
+            }
+
+            //Pass Your Parameters here
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //No Parameters for this one..
+                params.put("email", email);
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(request);
+    }
+
+
+
+    //votes
+    public void apiConnect(String pol, String userID, String race, String state, String city) {
+        StringRequest request = new StringRequest(Request.Method.POST, "https://ptcvotingapi.azurewebsites.net/vote", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (!response.equals(null)) {
+                    //response
+
+                    Toast.makeText(vote_page.this, response, Toast.LENGTH_SHORT).show();
+                    Log.e("response", response);
+
+                    //Log.e("called converter", races.getRaces().get(0).getRace());
+                } else {
+                    Log.e("Your Array Response", "Data Null");
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error is ", "" + error);
+            }
+        }) {
+
+            //This is for Headers If You Needed
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Log.e("getHeaders", "Called :)");
+                String auth = buildAuth("ShhhImASecret", "ShhhImABiggerSecret123@");
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put(HttpHeaders.AUTHORIZATION, auth);
+                return headers;
+            }
+
+            //Pass Your Parameters here
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //No Parameters for this one..
+                params.put("pol", pol);
+                params.put("userID", userID);
+                params.put("race", race);
+                params.put("state", state);
+                params.put("city", city);
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(request);
     }
 }

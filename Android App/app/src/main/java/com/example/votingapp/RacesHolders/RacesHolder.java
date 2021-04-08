@@ -8,7 +8,6 @@ public class RacesHolder {
     public RacesHolder(){}
 
     public RacesHolder(List<Races> races) {
-
         this.races = races;
     }
 

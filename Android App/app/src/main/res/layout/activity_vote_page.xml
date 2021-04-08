@@ -7,179 +7,19 @@
     android:background="#CAA9E3"
     tools:context=".vote_page">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card1"
+    <TextView
+        android:id="@+id/RaceName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp">
+        android:layout_height="64dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="30sp" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="2dp"
-            android:id="@+id/image0"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Name"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:id="@+id/name0"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Party"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="35dp"
-            android:id="@+id/party0"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Des"
-            android:textSize="20dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="75dp"
-            android:id="@+id/des0"/>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card2"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        android:layout_marginTop="120dp">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="2dp"
-            android:id="@+id/image1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Name"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:id="@+id/name1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Party"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="35dp"
-            android:id="@+id/party1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Des"
-            android:textSize="20dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="75dp"
-            android:id="@+id/des1"/>
-
-    </androidx.cardview.widget.CardView>
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        android:layout_marginTop="240dp">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="2dp"
-            android:id="@+id/image2"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Name"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:id="@+id/name2"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Party"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="35dp"
-            android:id="@+id/party2"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Des"
-            android:textSize="20dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="75dp"
-            android:id="@+id/des2"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        android:layout_marginTop="360dp">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="2dp"
-            android:id="@+id/image3"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Name"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:id="@+id/name3"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Party"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="35dp"
-            android:id="@+id/party3"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Runner's Des"
-            android:textSize="20dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="75dp"
-            android:id="@+id/des3"/>
-
-    </androidx.cardview.widget.CardView>
-
-
+        android:layout_height="match_parent"
+        android:layout_below="@+id/RaceName"
+        android:layout_marginTop="-1dp" />
 </RelativeLayout>
