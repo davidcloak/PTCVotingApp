@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.demo.Tools.Tools;
 import com.example.demo.Voter.Races;
 import com.example.demo.Voter.VoteCount;
+import com.github.cnlinjie.infrastructure.util.security.Rfc2898DeriveBytes;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -32,39 +33,39 @@ public class UserController {
     private int SaltByteSize = 24;
     private int HashByteSize = 24;
     private int HasingIterationsCount = 10101;
-    @RequestMapping(value = "/password", method = RequestMethod.GET)
-    public String PasswordTest(@RequestParam(defaultValue = "*") String password) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        byte[] salt;
-        byte[] buffer2;
-        if (password == null)
-            throw new IllegalArgumentException("password");
-        Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, new byte[SaltByteSize], HasingIterationsCount);
-        salt = bytes.getSalt();
-        buffer2 = bytes.getBytes(HashByteSize);
-        byte[] dst = new byte[(SaltByteSize + HashByteSize) + 1];
-        System.arraycopy(salt, 0, dst, 1, SaltByteSize);
-        System.arraycopy(buffer2, 0, dst, SaltByteSize+1, HashByteSize);
-        return Base64.encodeBase64String(dst);
-    }
+    // @RequestMapping(value = "/password", method = RequestMethod.GET)
+    // public String PasswordTest(@RequestParam(defaultValue = "*") String password) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+    //     byte[] salt;
+    //     byte[] buffer2;
+    //     if (password == null)
+    //         throw new IllegalArgumentException("password");
+    //     Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, new byte[SaltByteSize], HasingIterationsCount);
+    //     salt = bytes.getSalt();
+    //     buffer2 = bytes.getBytes(HashByteSize);
+    //     byte[] dst = new byte[(SaltByteSize + HashByteSize) + 1];
+    //     System.arraycopy(salt, 0, dst, 1, SaltByteSize);
+    //     System.arraycopy(buffer2, 0, dst, SaltByteSize+1, HashByteSize);
+    //     return Base64.encodeBase64String(dst);
+    // }
 
-    @RequestMapping(value = "/passwordH", method = RequestMethod.GET)
-    public boolean verifyHashedPassword(String hashedPassword, String password) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        byte[] buffer4;
-        if (hashedPassword == null)
-            return false;
-        if (password == null)
-            throw new IllegalArgumentException("password");
-        byte[] src = Base64.decodeBase64(hashedPassword);
-        if ((src.length != (SaltByteSize + HashByteSize) + 1) || (src[0] != 0))
-           return false;
-        byte[] dst = new byte[SaltByteSize];
-        System.arraycopy(src, 1, dst, 0, 0x10);
-        byte[] buffer3 = new byte[HashByteSize];
-        System.arraycopy(src, SaltByteSize+1, buffer3, 0, HashByteSize);
-        Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password,dst,HasingIterationsCount);
-        buffer4 = bytes.getBytes(HashByteSize);
-        return Arrays.equals(buffer3, buffer4);
-    }
+    // @RequestMapping(value = "/passwordH", method = RequestMethod.GET)
+    // public boolean verifyHashedPassword(String hashedPassword, String password) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+    //     byte[] buffer4;
+    //     if (hashedPassword == null)
+    //         return false;
+    //     if (password == null)
+    //         throw new IllegalArgumentException("password");
+    //     byte[] src = Base64.decodeBase64(hashedPassword);
+    //     if ((src.length != (SaltByteSize + HashByteSize) + 1) || (src[0] != 0))
+    //        return false;
+    //     byte[] dst = new byte[SaltByteSize];
+    //     System.arraycopy(src, 1, dst, 0, 0x10);
+    //     byte[] buffer3 = new byte[HashByteSize];
+    //     System.arraycopy(src, SaltByteSize+1, buffer3, 0, HashByteSize);
+    //     Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password,dst,HasingIterationsCount);
+    //     buffer4 = bytes.getBytes(HashByteSize);
+    //     return Arrays.equals(buffer3, buffer4);
+    // }
 
     @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     public List<User> GetUser(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String email) {
@@ -218,7 +219,46 @@ public class UserController {
         }
      }
 
-    private String getLocationID(String state, String city){
+     @RequestMapping(value = "/setLocation", method = RequestMethod.GET)
+     public String setLocation(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String state, @RequestParam(defaultValue = "*") String city){
+        String SQL = String.format("insert into Location values ('%s', '%s')", state, city);
+
+        try{
+            Connection con = DriverManager.getConnection(connectionString);
+            Statement stmt = con.createStatement();
+            ResultSet result = stmt.executeQuery(SQL);
+
+            if(result.next()){
+                String id = result.getInt("locationID") +"";
+            }
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+        return getLocationID(state, city);
+    }
+
+     @RequestMapping(value = "/getLocation", method = RequestMethod.GET)
+     public String getLocation(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String state, @RequestParam(defaultValue = "*") String city){
+        String id = "null";
+        String SQL = String.format("select * from location where state = '%s' and city = '%s'", state, city);
+
+        try{
+            Connection con = DriverManager.getConnection(connectionString);
+            Statement stmt = con.createStatement();
+            ResultSet result = stmt.executeQuery(SQL);
+
+            if(result.next()){
+                id = result.getInt("locationID") +"";
+            }
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+        return id;
+    }
+    
+    public String getLocationID(String state, String city){
         String id = "null";
         String SQL = String.format("select * from location where state = '%s' and city = '%s'", state, city);
 

@@ -157,7 +157,7 @@ public class register_page extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-             
+
             try{
                 con = connectionClass("Nate","Ghost123","voteShield","voteshield.database.windows.net");
                 if(con == null){

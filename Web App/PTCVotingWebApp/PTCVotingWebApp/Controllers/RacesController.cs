@@ -258,9 +258,36 @@ namespace PTCVotingWebApp.Controllers
             
         }
 
+        public string setLoation(string state, string city)
+        {
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/setLocation?state={state}&city={city}";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+            return rawJSON;
+        }
+
         public int getLocationID(string state, string city)
         {
-            return 2;
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/getLocation?state={state}&city={city}";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            string rawJSON = webClient.DownloadString(api);
+
+            if (rawJSON.Equals("null"))
+            {
+                return Convert.ToInt32(setLoation(state, city));
+            }
+            else
+            {
+                return Convert.ToInt32(rawJSON);
+            }
         }
 
 
