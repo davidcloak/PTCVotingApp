@@ -84,7 +84,8 @@ public class race_page extends AppCompatActivity {
 
     public void BuildRunners(){
         ArrayList<Races> race = (ArrayList<Races>) races.getRaces();
-
+        Log.i("State", state);
+        Log.i("city", city);
         //adds only needed poles
         for(int i = 0; i < races.getRaces().size(); i++){
             if(race.get(i).getState().equalsIgnoreCase("National") && race.get(i).getCity().equalsIgnoreCase("NoState")){

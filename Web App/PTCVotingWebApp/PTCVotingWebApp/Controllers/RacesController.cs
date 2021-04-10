@@ -29,7 +29,7 @@ namespace PTCVotingWebApp.Controllers
             string authInfo = username + ":" + password;
             authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
 
-            string api = "https://ptcvotingapi.azurewebsites.net/getVoteCount/?race={race}&state={state}&city={city}";
+            string api = $"https://ptcvotingapi.azurewebsites.net/getVoteCount/?race={race}&state={state}&city={city}";
             var webClient = new WebClient();
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
             string rawJSON = webClient.DownloadString(api);
@@ -37,7 +37,7 @@ namespace PTCVotingWebApp.Controllers
             Console.WriteLine(rawJSON);
             ResultsHolder results = JsonConvert.DeserializeObject<ResultsHolder>(rawJSON);
             ViewBag.results = results.Results.ToArray();
-
+            ViewData["Json"] = race+state+city;
             return View();
         }
             public int deletePole(string race, string state, string city)

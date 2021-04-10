@@ -12,7 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
+import java.util.Date;
+
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.joda.time.DateTime;
 
 //import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
 
@@ -66,6 +70,34 @@ public class UserController {
     //     buffer4 = bytes.getBytes(HashByteSize);
     //     return Arrays.equals(buffer3, buffer4);
     // }
+
+    @RequestMapping(value = "/RaceStatus", method = RequestMethod.GET)
+    public String GetRaceStatus(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String race, @RequestParam(defaultValue = "*") String state, @RequestParam(defaultValue = "*") String city) {
+        if(t.isUser(auth).getAccessLevel().equals("Good")){
+            String SQL = String.format("Select * from VoteTime where race = '%s' and locationId = '%s'", race, getLocationID(state, city));
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                Statement stmt = con.createStatement();
+                ResultSet result = stmt.executeQuery(SQL);
+                if(result.next()){
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    Date date = result.getDate("VoteEnd");
+                    Date today = new Date();
+                    if(dateFormat.format(date).equals(dateFormat.format(today))){
+                        return "Open "+dateFormat.format(date)+" "+dateFormat.format(today);
+                    }else if(date.after(today)){
+                        return "NotOpen "+dateFormat.format(date)+" "+dateFormat.format(today);
+                    }else if(date.before(today)){
+                        return "Ended "+dateFormat.format(date)+" "+dateFormat.format(today);
+                    }
+                }
+            }catch (SQLException e) {
+            }
+            return null;
+        }else{
+            return "Not Authed";
+        }
+    }
 
     @RequestMapping(value = "/getVotedRaces", method = RequestMethod.GET)
     public List<String> getVotedRaces() {
@@ -328,7 +360,8 @@ public class UserController {
 
                 while (result.next()) {
                     String race = result.getString("Race");
-                    String SQL2 = String.format("select * from race join Politcal on race.fk_politcal = Politcal.politcal where race = '%s'", race);
+                    String location = result.getString("locationID");
+                    String SQL2 = String.format("select * from race join Politcal on race.fk_politcal = Politcal.politcal where race = '%s' and locationID = '%s'", race, location);
 
                     Connection con2 = DriverManager.getConnection(connectionString);
                     Statement stmt2 = con2.createStatement();

@@ -1,5 +1,7 @@
 package com.example.votingapp.RacesHolders;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Races {
@@ -49,6 +51,9 @@ public class Races {
     public void setCity(String city) {
         City = city;
     }
-    
+
+    public void shuffle(){
+        Collections.shuffle(Runners);
+    }
     
 }

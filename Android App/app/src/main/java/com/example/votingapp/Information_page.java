@@ -118,7 +118,7 @@ public class Information_page extends AppCompatActivity implements AdapterView.O
                     Spinner stateSpin = findViewById(R.id.stateSpinner);
                     String stateValue = stateSpin.getSelectedItem().toString();
                     TextView cityText = findViewById(R.id.editCity);
-                    String cityValue = cityText.toString();
+                    String cityValue = cityText.getText().toString();
 
                     intent.putExtra("state", stateValue);
                     intent.putExtra("city", cityValue);

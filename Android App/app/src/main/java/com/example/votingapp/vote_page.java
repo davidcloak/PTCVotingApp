@@ -75,6 +75,8 @@ public class vote_page extends AppCompatActivity {
         PartyTitle = findViewById(R.id.RaceName);
         PartyTitle.setText(raceList.get(position).getRace());
 
+        raceList.get(position).shuffle();
+
         RunnerListAdapter adapter = new RunnerListAdapter(this, R.layout.runner_adapter_view, (List<Pol>) raceList.get(position).getRunners());
         listView.setAdapter(adapter);
 

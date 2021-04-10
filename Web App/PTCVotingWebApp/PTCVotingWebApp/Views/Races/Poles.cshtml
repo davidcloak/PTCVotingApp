@@ -14,7 +14,7 @@
     }
 </style>
 <script>
-    function confermBuild(name) {
+    function confermBuild(name, state, city) {
         var conferm = document.getElementById("confermation");
         conferm.style.visibility = 'visible';
 
@@ -22,8 +22,8 @@
         var yes = document.getElementById("conferm");
         var no = document.getElementById("deny");
 
-        h4.innerHTML = "Are you sure you want to delete "+name+"?";
-        yes.setAttribute("form", "delete"+name);
+        h4.innerHTML = "Are you sure you want to delete "+name+" at "+city+","+state+"?";
+        yes.setAttribute("form", "delete"+name+state+city);
         no.setAttribute("onclick", "RemoveCon()");
     }
 
@@ -63,24 +63,24 @@
             }
         </div>
         <div class="col-2">
-            <form method="post" id="@("edit"+data[i].Race)" action="/Races/EditPole" onsubmit="return confirm('Do you really want to submit the form?');">
+            <form method="post" id="@("edit"+data[i].Race+data[i].State+data[i].City)" action="/Races/EditPole" onsubmit="return confirm('Do you really want to submit the form?');">
                 <input type="hidden" name="race" value="@data[i].Race" />
                 <input type="hidden" name="state" value="@data[i].State" />
                 <input type="hidden" name="city" value="@data[i].City" />
-                <a href="javascript:{}" onclick="document.getElementById('@("edit"+data[i].Race)').submit();">Edit</a>
+                <a href="javascript:{}" onclick="document.getElementById('@("edit"+data[i].Race+data[i].State+data[i].City)').submit();">Edit</a>
             </form>
-            <form method="post" id="@("delete"+data[i].Race)" action="/Races/Poles">
+            <form method="post" id="@("delete"+data[i].Race+data[i].State+data[i].City)" action="/Races/Poles">
                 <input type="hidden" name="race" value="@data[i].Race" />
                 <input type="hidden" name="state" value="@data[i].State" />
                 <input type="hidden" name="city" value="@data[i].City" />
-                <a href="javascript:{}" onclick="confermBuild('@data[i].Race');">Delete</a>
+                <a href="javascript:{}" onclick="confermBuild('@data[i].Race', '@data[i].State', '@data[i].City');">Delete</a>
             </form>
-            @*<form method="post" id="@("results"+data[i].Race)" action="/Races/Results">
+            <form method="post" id="@("results"+data[i].Race+data[i].State+data[i].City)" action="/Races/Results">
                 <input type="hidden" name="race" value="@data[i].Race" />
                 <input type="hidden" name="state" value="@data[i].State" />
                 <input type="hidden" name="city" value="@data[i].City" />
-                <a href="javascript:{}" onclick="document.getElementById('@("results"+data[i].Race)').submit();">View Results</a>
-            </form>*@
+                <a href="javascript:{}" onclick="document.getElementById('@("results"+data[i].Race+data[i].State+data[i].City)').submit();">View Results</a>
+            </form>
         </div>
     </div>
 }
