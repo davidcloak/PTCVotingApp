@@ -23,21 +23,48 @@ namespace PTCVotingWebApp.Controllers
         string username = "ShhhImASecret";
         string password = "ShhhImABiggerSecret123@";
 
-        [HttpPost]
-        public IActionResult Results(string race, string state, string city)
+        private string isPoleOpen(string race, string state, string city)
         {
+            string result;
+
             string authInfo = username + ":" + password;
             authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
 
-            string api = $"https://ptcvotingapi.azurewebsites.net/getVoteCount/?race={race}&state={state}&city={city}";
+            string api = $"https://ptcvotingapi.azurewebsites.net/RaceStatus?race={race}&state={state}&city={city}";
             var webClient = new WebClient();
             webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
-            string rawJSON = webClient.DownloadString(api);
-            rawJSON = "{ \"results\": " + rawJSON + "}";
-            Console.WriteLine(rawJSON);
-            ResultsHolder results = JsonConvert.DeserializeObject<ResultsHolder>(rawJSON);
-            ViewBag.results = results.Results.ToArray();
-            ViewData["Json"] = race+state+city;
+            result = webClient.DownloadString(api);
+
+            return result;
+        }
+
+        [HttpPost]
+        public IActionResult Results(string race, string state, string city)
+        {
+            string isPole = isPoleOpen(race, state, city);
+            if(isPole.Equals("Ended"))
+            {
+                string authInfo = username + ":" + password;
+                authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+                string api = $"https://ptcvotingapi.azurewebsites.net/getVoteCount/?race={race}&state={state}&city={city}";
+                var webClient = new WebClient();
+                webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+                string rawJSON = webClient.DownloadString(api);
+                rawJSON = "{ \"results\": " + rawJSON + "}";
+                Console.WriteLine(rawJSON);
+                ResultsHolder results = JsonConvert.DeserializeObject<ResultsHolder>(rawJSON);
+                ViewBag.results = results.Results.ToArray();
+                ViewData["Status"] = "Results";
+            }else if(isPoleOpen(race, state, city).Equals("Open"))
+            {
+                ViewData["Status"] = "Open Now Go Vote!";
+            }
+            else
+            {
+                ViewData["Status"] = "Pole will open up: "+isPole;
+            }
+
             return View();
         }
             public int deletePole(string race, string state, string city)
@@ -214,9 +241,22 @@ namespace PTCVotingWebApp.Controllers
             return View();
         }
 
+        public void saveDate(string race, string state, string city, DateTime date)
+        {
+            string result;
+
+            string authInfo = username + ":" + password;
+            authInfo = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authInfo));
+
+            string api = $"https://ptcvotingapi.azurewebsites.net/date?race={race}&state={state}&city={city}&date={date.ToString("MMMM dd, yyyy")}";
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Authorization, "Basic " + authInfo);
+            result = webClient.DownloadString(api);
+        }
+
         //TODO - redo this to match current data, do it in a function to be called also by the edit
         [HttpPost]
-        public async Task<IActionResult> FormCreateAsync(string race, string state, string city, string save = null, string runners = null)
+        public async Task<IActionResult> FormCreateAsync(string race, string state, string city, DateTime date, string save = null, string runners = null)
         {
             var searched = from b in _context.Politcal
                            select b;
@@ -236,7 +276,9 @@ namespace PTCVotingWebApp.Controllers
                         Console.WriteLine("Task ended delay...");
                     });
                 }
+                saveDate(race, state, city, date);
             }
+            ViewData["test"] = date.ToString("MMMM dd, yyyy");
             ViewBag.states = states;
             return View();
         }

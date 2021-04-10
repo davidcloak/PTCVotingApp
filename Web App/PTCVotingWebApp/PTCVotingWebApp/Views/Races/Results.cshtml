@@ -3,8 +3,10 @@
 *@
 @{
 }
-<h1>@ViewData["Json"]</h1>
+<h1>@ViewData["Status"]</h1>
 
+@if (ViewData["Status"].Equals("Results"))
+{
 @foreach (var x in ViewBag.results)
 {
     <div class="card" style="width: 18rem;">
@@ -16,4 +18,5 @@
             }*@
         </div>
     </div>
+}
 }

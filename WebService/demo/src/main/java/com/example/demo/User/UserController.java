@@ -84,11 +84,11 @@ public class UserController {
                     Date date = result.getDate("VoteEnd");
                     Date today = new Date();
                     if(dateFormat.format(date).equals(dateFormat.format(today))){
-                        return "Open "+dateFormat.format(date)+" "+dateFormat.format(today);
+                        return "Open";
                     }else if(date.after(today)){
-                        return "NotOpen "+dateFormat.format(date)+" "+dateFormat.format(today);
+                        return dateFormat.format(date);
                     }else if(date.before(today)){
-                        return "Ended "+dateFormat.format(date)+" "+dateFormat.format(today);
+                        return "Ended";
                     }
                 }
             }catch (SQLException e) {
@@ -97,6 +97,22 @@ public class UserController {
         }else{
             return "Not Authed";
         }
+    }
+
+    @RequestMapping(value = "/date", method = RequestMethod.GET)
+    public String SaveRaceDate(@RequestHeader("Authorization") String auth, @RequestParam(defaultValue = "*") String race, @RequestParam(defaultValue = "*") String state, @RequestParam(defaultValue = "*") String city,@RequestParam(defaultValue = "*") String date) {
+        if(t.isUser(auth).getAccessLevel().equals("Good")){
+            String SQL = String.format("insert into VoteTime Values('%s','%s','%s')", race, getLocationID(state, city), date);
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate(SQL);
+            }catch (SQLException e) {
+                return e.getMessage();
+            }
+            return "done";
+        }
+        return "not authed";
     }
 
     @RequestMapping(value = "/getVotedRaces", method = RequestMethod.GET)
