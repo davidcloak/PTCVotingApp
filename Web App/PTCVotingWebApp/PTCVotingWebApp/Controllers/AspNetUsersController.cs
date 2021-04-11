@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PTCVotingWebApp.Models;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PTCVotingWebApp.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class AspNetUsersController : Controller
     {
         private readonly voteShieldContext _context;

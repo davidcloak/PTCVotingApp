@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         // GET: Politcals/Details/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,6 +64,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         // GET: Politcals/Create
+        [Authorize(Roles = "Administrators")]
         public IActionResult Create()
         {
             return View();
@@ -72,6 +75,7 @@ namespace PTCVotingWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Create([Bind("Politcal1,FkId,PoliticalParty,Name,ImageUrl,Description")] Politcal politcal)
         {
             if (ModelState.IsValid)
@@ -84,6 +88,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         // GET: Politcals/Edit/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -104,6 +109,7 @@ namespace PTCVotingWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Edit(int id, [Bind("Politcal1,FkId,PoliticalParty,Name,ImageUrl,Description")] Politcal politcal)
         {
             if (id != politcal.Politcal1)
@@ -135,6 +141,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         // GET: Politcals/Delete/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,6 +162,7 @@ namespace PTCVotingWebApp.Controllers
         // POST: Politcals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var politcal = await _context.Politcal.FindAsync(id);

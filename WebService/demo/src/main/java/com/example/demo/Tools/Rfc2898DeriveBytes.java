@@ -17,11 +17,13 @@
  * along with this library; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package com.example.demo.Voter;
+package com.example.demo.Tools;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -158,6 +160,8 @@ public class Rfc2898DeriveBytes {
     }
 
     public byte[] getSalt() {
+        Random random = new Random();
+        random.nextBytes(_salt);
         return _salt;
     }
 

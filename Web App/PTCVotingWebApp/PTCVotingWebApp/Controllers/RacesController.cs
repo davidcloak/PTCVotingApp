@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PTCVotingWebApp.Models;
@@ -81,6 +82,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         public IActionResult Poles(string race, string state, string city)
         {
             int i = deletePole(race, state, city);
@@ -161,6 +163,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> EditPole(string race, string state, string city, string save = null, string runners = null)
         {
             var searched = from b in _context.Politcal
@@ -224,6 +227,7 @@ namespace PTCVotingWebApp.Controllers
             string rawJSON = webClient.DownloadString(api);
         }
 
+        [Authorize(Roles = "Administrators")]
         public IActionResult FormCreate()
         {
             clearDups();
@@ -256,6 +260,7 @@ namespace PTCVotingWebApp.Controllers
 
         //TODO - redo this to match current data, do it in a function to be called also by the edit
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> FormCreateAsync(string race, string state, string city, DateTime date, string save = null, string runners = null)
         {
             var searched = from b in _context.Politcal
@@ -351,12 +356,14 @@ namespace PTCVotingWebApp.Controllers
 
 
         // GET: Races
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Race.ToListAsync());
         }
 
         // GET: Races/Details/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -384,6 +391,7 @@ namespace PTCVotingWebApp.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Race1,FkPolitcal,Pk")] Race race)
         {
@@ -397,6 +405,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         // GET: Races/Edit/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -417,6 +426,7 @@ namespace PTCVotingWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Edit(int id, [Bind("Race1,FkPolitcal,Pk")] Race race)
         {
             if (id != race.Pk)
@@ -448,6 +458,7 @@ namespace PTCVotingWebApp.Controllers
         }
 
         // GET: Races/Delete/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -468,6 +479,7 @@ namespace PTCVotingWebApp.Controllers
         // POST: Races/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var race = await _context.Race.FindAsync(id);

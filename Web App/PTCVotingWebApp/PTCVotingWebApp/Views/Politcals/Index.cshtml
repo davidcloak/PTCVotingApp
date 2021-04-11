@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PTCVotingWebApp.Models.Politcal>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Politicians";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -20,11 +20,14 @@
     }
 </style>
 
-<h1>Index</h1>
+<h1>Politicians</h1>
 
+@if (User.IsInRole("Administrators"))
+{
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add Politician</a>
 </p>
+}
 @*Default User Icon is 512 by 512*@
 @foreach (var item in Model)
 {
